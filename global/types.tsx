@@ -1,6 +1,7 @@
 import { ImageSourcePropType } from "react-native/types"
 
 export type CardType = {
+    id:string
     color:string
     visuals:VisualItem[]
     title:string
@@ -14,5 +15,7 @@ type VisualItem = {
 
 export type HomeStackParamsList = {
     Home:undefined
-    Details:undefined
-}
+    Details:{
+        item:CardType
+    }
+};

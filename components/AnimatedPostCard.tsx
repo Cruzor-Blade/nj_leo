@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Animated, LayoutChangeEvent, Pressable, StyleSheet } from "react-native";
 import Card from "./PostCard";
-import { CardType } from "../global/types";
+import { CardType, HomeStackParamsList } from "../global/types";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 
 type AnimatedPostCardProps = {
@@ -12,10 +13,11 @@ type AnimatedPostCardProps = {
   height:number
   totalCardHeights:number[]
   prevCardsHeight:number
+  navigation:StackNavigationProp<HomeStackParamsList, "Home", undefined>
   setTotalCardHeights:React.Dispatch<React.SetStateAction<number[]>>
 }
 
-const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, totalCardHeights, setTotalCardHeights }: AnimatedPostCardProps) => {
+const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, navigation, totalCardHeights, setTotalCardHeights }: AnimatedPostCardProps) => {
   
     const cardMargin = 16;
     const [visibleCardHeight, setVisibleCardHeight] = useState(0); //The visible height of a card
@@ -79,14 +81,13 @@ const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, 
 
   return (
     <Animated.View
-      style={[styles.card, { opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
-      key={index}
+        style={[styles.card, { opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
+        key={index}
     >   
-        
-            <Card
-                onLayout={onLayout}
-                {...{ item, cardWidth, visibleCardHeight }}
-            />
+        <Card
+            onLayout={onLayout}
+            {...{ item, cardWidth, visibleCardHeight, navigation }}
+        />
     </Animated.View>
   );
 };
