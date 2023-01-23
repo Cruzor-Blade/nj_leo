@@ -1,45 +1,38 @@
 import React from "react";
-import { Animated, Dimensions, StyleSheet, View } from "react-native";
-import Card, {
-  defaultCardHeight,
-} from "./Card";
+import { Animated, StyleSheet } from "react-native";
+import Card from "./Card";
 import { CardType } from "../global/types";
 
-const cardMargin = 16;
-export const cardHeight = defaultCardHeight + cardMargin * 2;
-const { height: wHeight } = Dimensions.get("window");
-const height = wHeight - 64;
-const styles = StyleSheet.create({
-  card: {
-    marginVertical: cardMargin,
-    alignSelf: "center",
-  },
-});
 
 interface WalletCardProps {
-  y: Animated.Value;
-  index: number;
-  item: CardType;
+  y: Animated.Value
+  index: number
+  item: CardType
+  cardMargin:number
+  totalCardHeight:number
+  cardWidth:number
+  visibleCardHeight:number
+  height:number
 }
 
-const WalletCard = ({ item, y, index }: WalletCardProps) => {
-  const position = Animated.subtract(index * cardHeight, y);
-  const isDisappearing = -cardHeight;
+const WalletCard = ({ item, y, index, cardMargin, totalCardHeight, height, cardWidth, visibleCardHeight }: WalletCardProps) => {
+  const position = Animated.subtract(index * totalCardHeight, y);
+  const isDisappearing = -totalCardHeight;
   const isTop = 0;
-  const isBottom = height - cardHeight;
+  const isBottom = height - totalCardHeight;
   const isAppearing = height;
   const translateY = Animated.add(
     Animated.add(
       y,
       y.interpolate({
-        inputRange: [0, 0.00001 + index * cardHeight],
-        outputRange: [0, -index * cardHeight],
+        inputRange: [0, 0.00001 + index * totalCardHeight],
+        outputRange: [0, -index * totalCardHeight],
         extrapolateRight: "clamp",
       })
     ),
     position.interpolate({
       inputRange: [isBottom, isAppearing],
-      outputRange: [0, -cardHeight / 4],
+      outputRange: [0, -totalCardHeight / 4],
       extrapolate: "clamp",
     })
   );
@@ -54,12 +47,18 @@ const WalletCard = ({ item, y, index }: WalletCardProps) => {
   });
   return (
     <Animated.View
-      style={[styles.card, { opacity, transform: [{ translateY }, { scale }] }]}
+      style={[styles.card, { opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
       key={index}
     >
-      <Card {...{ item }} />
+      <Card {...{ item, cardWidth, visibleCardHeight }} />
     </Animated.View>
   );
 };
 
+
+const styles = StyleSheet.create({
+    card: {
+      alignSelf: "center",
+    },
+  });
 export default WalletCard;

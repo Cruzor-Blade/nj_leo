@@ -1,10 +1,20 @@
 import React from "react";
-import { Animated, FlatList } from "react-native";
+import { Animated, Dimensions, FlatList } from "react-native";
 
 import WalletCard from "./WalletCard";
 import { CardType } from "../global/types";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+
+const ratio = 228 / 362;
+const cardMargin = 16;
+const { height: wHeight, width } = Dimensions.get("window");
+
+const cardWidth = width * 0.9;
+const visibleCardHeight = cardWidth * ratio; //The visible height of a card
+
+const totalCardHeight = visibleCardHeight + cardMargin * 2; //The total height of a card, including vertical margin
+const height = wHeight - 64;
 
 const cards:CardType[] = [
     {
@@ -41,9 +51,12 @@ const Wallet = () => {
       bounces={false}
       data={cards}
       renderItem={({ item, index }) => (
-        <WalletCard item={item as CardType} {...{ index, y }} />
+        <WalletCard
+            item={item as CardType}
+            {...{ index, y, cardMargin, totalCardHeight:(totalCardHeight+20*index), cardWidth, visibleCardHeight:(visibleCardHeight+40*index), height, }}
+        />
       )}
-      keyExtractor={(item:any) => item.index}
+      keyExtractor={(item:any) => item.color}
       {...{ onScroll }}
     />
   );
