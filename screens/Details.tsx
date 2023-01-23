@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { Image, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
@@ -24,11 +24,23 @@ const Details = ({route}:DetailsPropsType) => {
                     <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
                 </View>
             </View>
-            <View style={{borderTopWidth:1, width:'100%'}}>
-                
+            <View style={{borderTopWidth:1, width:'100%', flexDirection:'row', paddingHorizontal:10}}>
+                <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
+                <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
+                <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
             </View>
         </ScrollView>
     )
 };
+
+
+const styles = StyleSheet.create({
+    socialIcon: {
+        height:50,
+        width:50,
+        resizeMode:'contain',
+        margin:10
+    }
+})
 
 export default Details;
