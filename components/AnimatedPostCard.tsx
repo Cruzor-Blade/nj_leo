@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Animated, LayoutChangeEvent, StyleSheet } from "react-native";
-import Card from "./Card";
+import Card from "./PostCard";
 import { CardType } from "../global/types";
 
 
-interface WalletCardProps {
+type AnimatedPostCardProps = {
   y: Animated.Value
   index: number
   item: CardType
@@ -15,7 +15,7 @@ interface WalletCardProps {
   setTotalCardHeights:React.Dispatch<React.SetStateAction<number[]>>
 }
 
-const WalletCard = ({ item, y, index, height, cardWidth, prevCardsHeight, totalCardHeights, setTotalCardHeights }: WalletCardProps) => {
+const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, totalCardHeights, setTotalCardHeights }: AnimatedPostCardProps) => {
   
     const cardMargin = 16;
     const [visibleCardHeight, setVisibleCardHeight] = useState(0); //The visible height of a card
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
       alignSelf: "center",
     },
   });
-export default WalletCard;
+export default AnimatedPostCard;

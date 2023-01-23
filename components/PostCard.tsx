@@ -1,25 +1,25 @@
 import React from "react";
-import { Dimensions, Image, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
+import { Image, LayoutChangeEvent, StyleSheet, Text, View } from "react-native";
 import { CardType } from "../global/types";
 
 
-type CardProps = {
+type PostCardProps = {
   item:CardType
   cardWidth:number
   visibleCardHeight:number
   onLayout:(event: LayoutChangeEvent) => void
 }
 
-export default ({ item, cardWidth, visibleCardHeight, onLayout }: CardProps) => {
+const PostCard = ({ item, cardWidth, visibleCardHeight, onLayout }: PostCardProps) => {
 
     return (
         <View
-            style={[styles.card, {width:cardWidth, borderWidth:1, borderColor:'red'}]}
+            style={[styles.card, {width:cardWidth, borderWidth:1, borderColor:'rgba(0, 0, 0, 0.1)'}]}
             onLayout={onLayout}
         >
             <Image source={item.visuals[0].source} style={{height:cardWidth*2/3, width:cardWidth, resizeMode:'stretch'}} />
             <View style={styles.cardBottom}>
-                <Text style={{fontSize:20, color:'#000'}}>
+                <Text style={{fontSize:20, color:'#000', fontWeight:'500'}}>
                     {item.title}
                 </Text>
                 <Text style={{color:'#567'}}>
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
       borderRadius:20
     },
     cardBottom: {
-        padding:10
+        padding:14
     }
   });
   
-  
+export default PostCard;

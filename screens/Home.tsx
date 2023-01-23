@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Animated, Dimensions, FlatList, LayoutChangeEvent, View } from "react-native";
-import WalletCard from "./WalletCard";
+import { Animated, Dimensions, FlatList, View } from "react-native";
 import { CardType } from "../global/types";
+import AnimatedPostCard from "../components/AnimatedPostCard";
 
 
 const imgs = {
@@ -152,7 +152,7 @@ const cards:CardType[] = [
     },
     
 ]
-const Wallet = () => {
+const Home = () => {
     const y = new Animated.Value(0);
     
     const [totalCardHeights, setTotalCardHeights] = useState<number[]>([]); //Array containing the heights of all the rendered cards
@@ -172,7 +172,7 @@ const Wallet = () => {
     const RenderItem = ({ item, index }:{item:unknown, index:number}) => {
         const prevCardsHeight = sumArrayNumbers(totalCardHeights.slice(0, index));
         return (
-            <WalletCard
+            <AnimatedPostCard
                 item={item as CardType}
                 {...{ index, y, cardWidth, height, totalCardHeights, setTotalCardHeights, prevCardsHeight }}
             />
@@ -192,4 +192,4 @@ const Wallet = () => {
   );
 };
 
-export default Wallet;
+export default Home;
