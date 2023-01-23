@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Animated, LayoutChangeEvent, StyleSheet } from "react-native";
+import { Animated, LayoutChangeEvent, Pressable, StyleSheet } from "react-native";
 import Card from "./PostCard";
 import { CardType } from "../global/types";
 
@@ -81,11 +81,12 @@ const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, 
     <Animated.View
       style={[styles.card, { opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
       key={index}
-    >
-        <Card
-            onLayout={onLayout}
-            {...{ item, cardWidth, visibleCardHeight }}
-        />
+    >   
+        
+            <Card
+                onLayout={onLayout}
+                {...{ item, cardWidth, visibleCardHeight }}
+            />
     </Animated.View>
   );
 };

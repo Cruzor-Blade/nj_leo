@@ -10,7 +10,7 @@ type PostCardProps = {
   onLayout:(event: LayoutChangeEvent) => void
 }
 
-const PostCard = ({ item, cardWidth, visibleCardHeight, onLayout }: PostCardProps) => {
+const PostCard = ({ item, cardWidth, onLayout }: PostCardProps) => {
 
     return (
         <View

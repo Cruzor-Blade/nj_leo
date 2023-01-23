@@ -11,3 +11,8 @@ type VisualItem = {
     type:'image'
     source:ImageSourcePropType
 }
+
+export type HomeStackParamsList = {
+    Home:undefined
+    Details:undefined
+}
