@@ -16,7 +16,7 @@ const Details = ({route}:DetailsPropsType) => {
     return (
         <ScrollView contentContainerStyle={{flex:1, alignItems:'center'}}>
             <Image source={item.visuals[0].source} style={{width, height:displayHeight}} />
-            <View style={{padding:10}}>
+            <View style={{paddingHorizontal:10, paddingVertical:5}}>
                 <View style={{marginTop:10, flexWrap:'wrap'}}>
                     <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>{item.title}</Text>
                 </View>
@@ -24,7 +24,16 @@ const Details = ({route}:DetailsPropsType) => {
                     <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
                 </View>
             </View>
-            <View style={{borderTopWidth:1, width:'100%', flexDirection:'row', paddingHorizontal:10}}>
+            <View style={{borderTopWidth:1, width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+                    <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
+                    <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9, transform:[{scale:1.1}]}}/>
+                </View>
+                <Text>
+
+                </Text>
+            </View>
+            <View style={{borderTopWidth:1, width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
                 <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
                 <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
                 <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
@@ -39,7 +48,8 @@ const styles = StyleSheet.create({
         height:50,
         width:50,
         resizeMode:'contain',
-        margin:10
+        marginVertical:5,
+        marginHorizontal:10
     }
 })
 

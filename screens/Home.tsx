@@ -27,7 +27,7 @@ const height = wHeight - 64;
 
 const cards:CardType[] = [
     {
-        color:'blue',
+        reliabilityColor:'blue',
         title:'HUhas ih',
         id:'Ijndasiu789231Iuindsa',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -43,7 +43,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'red',
+        reliabilityColor:'red',
         title:'HUhas ih',
         id:'dshjhaxuh%uy3276',
         description:" elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ",
@@ -63,7 +63,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'purple',
+        reliabilityColor:'purple',
         title:'HUhas ih',
         id:'Ihnasuy&632(*&y32187',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -83,7 +83,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'gray',
+        reliabilityColor:'gray',
         title:'HUhas ih',
         id:'Iun87321658Guasbnkyds',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam,  hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -103,7 +103,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'aquamarine',
+        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'^&hj328yHihoinds9uJ90',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -123,7 +123,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'cyan',
+        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'*neqw8B87312nbj&*9u423lkj9',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
@@ -143,7 +143,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'magenta',
+        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'*nea8yuN8yheknwd8yuN8ye3q',
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -163,7 +163,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'aquamarine',
+        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'*nds8ujn()ujndkas9080432',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -183,7 +183,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'cyan',
+        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'(ujnmeaw9un90sau32-85478',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
@@ -203,7 +203,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'magenta',
+        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'8ujnw890s7un)(8ujkewj90saudj',
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -223,7 +223,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'aquamarine',
+        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'(*ujnewa9ujnku90udas;kgr8y',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
@@ -243,7 +243,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'cyan',
+        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'()8jkeqw89nS8y8ihsendl',
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
@@ -263,7 +263,7 @@ const cards:CardType[] = [
         ]
     },
     {
-        color:'magenta',
+        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'9Ujkeq0i43298ydiouo08uad',
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",

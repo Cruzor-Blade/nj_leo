@@ -2,7 +2,7 @@ import { ImageSourcePropType } from "react-native/types"
 
 export type CardType = {
     id:string
-    color:string
+    reliabilityColor:string
     visuals:VisualItem[]
     title:string
     description:string

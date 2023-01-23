@@ -41,6 +41,10 @@ const PostCard = ({ item, cardWidth, onLayout, navigation }: PostCardProps) => {
                         {item.description}
                     </Text>
                 </View>
+                <View style={{marginBottom:10, flexDirection:'row', justifyContent:'flex-end', paddingHorizontal:30}}>
+                    <Text style={{color:'#777'}}>fiabilité</Text>
+                    <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9}}/>
+                </View>
             </Pressable>
         </View>
     );
