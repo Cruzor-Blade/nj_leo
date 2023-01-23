@@ -1,53 +1,26 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
+import { CardType } from "../global/types";
 
 const { width } = Dimensions.get("window");
 const ratio = 228 / 362;
-export const CARD_WIDTH = width * 0.8;
-export const CARD_HEIGHT = CARD_WIDTH * ratio;
-const styles = StyleSheet.create({
-  card: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
-  },
-});
+export const cardWidth = width * 0.8;
+export const defaultCardHeight = cardWidth * ratio;
 
-export enum Cards {
-  Card1,
-  Card2,
-  Card3,
-  Card4,
-  Card5,
-  Card6,
+type CardProps = {
+  item:CardType
 }
 
-interface CardProps {
-  type: Cards;
-}
-
-export default ({ type }: CardProps) => {
-  let source: number;
-  switch (type) {
-    case Cards.Card1:
-      source = require("./card1.png");
-      break;
-    case Cards.Card2:
-      source = require("./card2.png");
-      break;
-    case Cards.Card3:
-      source = require("./card3.png");
-      break;
-    case Cards.Card4:
-      source = require("./card4.png");
-      break;
-    case Cards.Card5:
-      source = require("./card5.png");
-      break;
-    case Cards.Card6:
-      source = require("./card6.png");
-      break;
-    default:
-      throw Error("Invalid card style");
-  }
-  return <Image style={styles.card} {...{ source }} />;
+export default ({ item }: CardProps) => {
+  return <View style={[styles.card, {backgroundColor:item.color}]} />;
 };
+
+const styles = StyleSheet.create({
+    card: {
+      width: cardWidth,
+      height: defaultCardHeight,
+      borderRadius:20
+    },
+  });
+  
+  

@@ -1,17 +1,17 @@
 import React from "react";
 import { Animated, Dimensions, StyleSheet, View } from "react-native";
 import Card, {
-  Cards,
-  CARD_HEIGHT as DEFAULT_CARD_HEIGHT,
+  defaultCardHeight,
 } from "./Card";
+import { CardType } from "../global/types";
 
-export const MARGIN = 16;
-export const CARD_HEIGHT = DEFAULT_CARD_HEIGHT + MARGIN * 2;
+const cardMargin = 16;
+export const cardHeight = defaultCardHeight + cardMargin * 2;
 const { height: wHeight } = Dimensions.get("window");
 const height = wHeight - 64;
 const styles = StyleSheet.create({
   card: {
-    marginVertical: MARGIN,
+    marginVertical: cardMargin,
     alignSelf: "center",
   },
 });
@@ -19,27 +19,27 @@ const styles = StyleSheet.create({
 interface WalletCardProps {
   y: Animated.Value;
   index: number;
-  type: Cards;
+  item: CardType;
 }
 
-const WalletCard = ({ type, y, index }: WalletCardProps) => {
-  const position = Animated.subtract(index * CARD_HEIGHT, y);
-  const isDisappearing = -CARD_HEIGHT;
+const WalletCard = ({ item, y, index }: WalletCardProps) => {
+  const position = Animated.subtract(index * cardHeight, y);
+  const isDisappearing = -cardHeight;
   const isTop = 0;
-  const isBottom = height - CARD_HEIGHT;
+  const isBottom = height - cardHeight;
   const isAppearing = height;
   const translateY = Animated.add(
     Animated.add(
       y,
       y.interpolate({
-        inputRange: [0, 0.00001 + index * CARD_HEIGHT],
-        outputRange: [0, -index * CARD_HEIGHT],
+        inputRange: [0, 0.00001 + index * cardHeight],
+        outputRange: [0, -index * cardHeight],
         extrapolateRight: "clamp",
       })
     ),
     position.interpolate({
       inputRange: [isBottom, isAppearing],
-      outputRange: [0, -CARD_HEIGHT / 4],
+      outputRange: [0, -cardHeight / 4],
       extrapolate: "clamp",
     })
   );
@@ -57,7 +57,7 @@ const WalletCard = ({ type, y, index }: WalletCardProps) => {
       style={[styles.card, { opacity, transform: [{ translateY }, { scale }] }]}
       key={index}
     >
-      <Card {...{ type }} />
+      <Card {...{ item }} />
     </Animated.View>
   );
 };

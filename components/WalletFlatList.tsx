@@ -1,32 +1,35 @@
 import React from "react";
 import { Animated, FlatList } from "react-native";
 
-import { Cards } from "./Card";
 import WalletCard from "./WalletCard";
+import { CardType } from "../global/types";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const cards = [
-  {
-    type: Cards.Card1,
-  },
-  {
-    type: Cards.Card2,
-  },
-  {
-    type: Cards.Card3,
-  },
-  {
-    type: Cards.Card4,
-  },
-  {
-    type: Cards.Card5,
-  },
-  {
-    type: Cards.Card6,
-  },
-];
-
+const cards:CardType[] = [
+    {
+        color:'blue'
+    },
+    {
+        color:'red'
+    },
+    {
+        color:'purple'
+    },
+    {
+        color:'gray'
+    },
+    {
+        color:'aquamarine'
+    },
+    {
+        color:'cyan'
+    },
+    {
+        color:'magenta'
+    },
+    
+]
 const Wallet = () => {
   const y = new Animated.Value(0);
   const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
@@ -37,8 +40,8 @@ const Wallet = () => {
       scrollEventThrottle={16}
       bounces={false}
       data={cards}
-      renderItem={({ index, item: { type } }) => (
-        <WalletCard {...{ index, y, type }} />
+      renderItem={({ item, index }) => (
+        <WalletCard item={item as CardType} {...{ index, y }} />
       )}
       keyExtractor={(item:any) => item.index}
       {...{ onScroll }}
