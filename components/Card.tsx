@@ -18,11 +18,11 @@ export default ({ item, cardWidth, visibleCardHeight, onLayout }: CardProps) => 
             onLayout={onLayout}
         >
             <Image source={item.visuals[0].source} style={{height:cardWidth*2/3, width:cardWidth, resizeMode:'stretch'}} />
-            <View>
-                <Text style={{fontSize:20}}>
+            <View style={styles.cardBottom}>
+                <Text style={{fontSize:20, color:'#000'}}>
                     {item.title}
                 </Text>
-                <Text>
+                <Text style={{color:'#567'}}>
                     {item.description}
                 </Text>
             </View>
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
     card: {
       borderRadius:20
     },
+    cardBottom: {
+        padding:10
+    }
   });
   
   

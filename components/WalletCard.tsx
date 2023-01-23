@@ -28,21 +28,14 @@ const WalletCard = ({ item, y, index, height, cardWidth, prevCardsHeight, totalC
     const isAppearing = height;
 
     const translateY = Animated.add(
-        Animated.add(
-            y,
-            y.interpolate({
+            y, //This y value serves as an equilibrium value, to translate the items in opposite direction of the scrolling
+            y.interpolate({ //This value ensure that the items keep moving as if they were normally scrolled
                 inputRange: [0, 0.00001 + prevCardsHeight],
-                outputRange: [0, -prevCardsHeight],
+                outputRange: [0, -(prevCardsHeight+index*16)],
                 extrapolateRight: "clamp",
             })
-        ),
-        position.interpolate({
-        inputRange: [isBottom, isAppearing],
-        outputRange: [0, -totalCardHeight / 4],
-        extrapolate: "clamp",
-        })
-    );
-
+        );
+    
     const scale = position.interpolate({
         inputRange: [isDisappearing, isTop, isBottom, isAppearing],
         outputRange: [0.5, 1, 1, 0.5],
