@@ -18,4 +18,7 @@ export type HomeStackParamsList = {
     Details:{
         item:CardType
     }
+    EditPost:{
+        item:CardType | null
+    }
 };
