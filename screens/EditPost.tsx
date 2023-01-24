@@ -1,7 +1,9 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
+import { openPicker } from "react-native-image-crop-picker";
+
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
 
@@ -13,9 +15,31 @@ const EditPost = ({route}:DetailsPropsType) => {
     const imageDims = Image.resolveAssetSource(item.visuals[0].source);
     const displayHeight = (width/imageDims.width)*imageDims.height;
 
+    const [postDescription, setPostDescription] = useState('');
+    const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
+    const [focusedChip, setFocusedChip] = useState('M');
+
+    
+    const openImagePicker = async () => {
+        try {
+            const pickedImg = await openPicker({
+                cropping: true,
+                mediaType:'photo',
+                multiple:false,
+                freeStyleCropEnabled:true,
+                compressImageQuality:0.8,
+            });
+            const imageUri = Platform.OS === 'ios' ? pickedImg.sourceURL : pickedImg.path;
+            setPostImgSource({uri: imageUri, type:pickedImg.mime});
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <ScrollView contentContainerStyle={{flex:1, alignItems:'center', backgroundColor:'#fff'}}>
-            <Image source={item.visuals[0].source} style={{width, height:displayHeight}} />
+            <Pressable onPress={openImagePicker} >
+                <Image source={postImgSource ? postImgSource : item.visuals[0].source} style={{width, height:displayHeight}} />
+            </Pressable>
             <View style={{paddingHorizontal:10, paddingVertical:5}}>
                 <View style={{marginTop:10, flexWrap:'wrap'}}>
                     <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>{item.title}</Text>

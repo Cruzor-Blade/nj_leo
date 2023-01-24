@@ -35,22 +35,6 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                         <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
                     </View>
                 </View>
-                <View style={{paddingHorizontal:10, paddingVertical:5}}>
-                    <View style={{marginTop:10, flexWrap:'wrap'}}>
-                        <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>{item.title}</Text>
-                    </View>
-                    <View style={{marginVertical:10}}>
-                        <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
-                    </View>
-                </View>
-                <View style={{paddingHorizontal:10, paddingVertical:5}}>
-                    <View style={{marginTop:10, flexWrap:'wrap'}}>
-                        <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>{item.title}</Text>
-                    </View>
-                    <View style={{marginVertical:10}}>
-                        <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
-                    </View>
-                </View>
                 <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
