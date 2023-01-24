@@ -17,11 +17,12 @@ const EditPost = ({route}:DetailsPropsType) => {
     
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
     const [postTitle, setPostTitle] = useState(item.title);
-    const [postDescription, setPostDescription] = useState('');
+    const [postDescription, setPostDescription] = useState(item.description);
     const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
     const [focusedChip, setFocusedChip] = useState('M');
 
     const [titleModalVisible, setTitleModalVisible] = useState(false);
+    const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
     
     const openImagePicker = async () => {
         try {
@@ -79,10 +80,64 @@ const EditPost = ({route}:DetailsPropsType) => {
                             </Pressable>
                         </View>
                         <TextInput
-                            style={{backgroundColor:'rgba(0, 0, 0, 0.08)', borderRadius:16, paddingHorizontal:10, fontSize:15}}
+                            style={styles.textInput}
                             placeholder='Écrivez ici...'
                             value={newTitle}
                             onChangeText={text => setNewTitle(text)}
+                        />
+                        <Pressable onPress={onDonePress} style={styles.doneBtn}>
+                            <Text style={{fontSize:16, fontWeight:'500'}}>Ok</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        )
+    };
+
+    type DescriptionModalPropsType = {
+        description:string
+        setDescription:React.Dispatch<React.SetStateAction<string>>
+        visible:boolean
+        onClosePress:() => void
+    };
+
+    const DescriptionModal = ({description, setDescription, visible, onClosePress}:DescriptionModalPropsType) => {
+        const [newDescription, setNewDescription] = useState(description);
+        
+        const onDonePress = () => {
+            setDescription(newDescription);
+            onClosePress();
+        };
+
+        return (
+            <Modal
+                transparent={true}
+                animationType='fade'
+                statusBarTranslucent
+                visible={visible}
+            >
+                <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
+                    <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
+                        <View style={{marginBottom:10, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                            <Text style={{fontSize:17, fontWeight:'500'}}>
+                                Description du business
+                            </Text>
+                            <Pressable
+                                style={styles.closeBtn}
+                                onPress={onClosePress}
+                                hitSlop={4}
+                            >
+                                <Text style={{fontWeight:'500', color:'#000', transform:[{scaleY:0.8}, {translateY:-1}]}}>
+                                    X
+                                </Text>
+                            </Pressable>
+                        </View>
+                        <TextInput
+                            style={{...styles.textInput, maxHeight:220}}
+                            placeholder='Écrivez ici...'
+                            value={newDescription}
+                            onChangeText={text => setNewDescription(text)}
+                            multiline
                         />
                         <Pressable onPress={onDonePress} style={styles.doneBtn}>
                             <Text style={{fontSize:16, fontWeight:'500'}}>Ok</Text>
@@ -97,9 +152,15 @@ const EditPost = ({route}:DetailsPropsType) => {
         <View style={{flex:1}}>
             <TitleModal
                 visible={titleModalVisible}
-                onClosePress={() => setTitleModalVisible(false)}
                 title={postTitle}
                 setTitle={setPostTitle}
+                onClosePress={() => setTitleModalVisible(false)}
+            />
+            <DescriptionModal
+                visible={descriptionModalVisible}
+                setDescription={setPostDescription}
+                description={postDescription}
+                onClosePress={() => setDescriptionModalVisible(false)}
             />
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
@@ -119,9 +180,13 @@ const EditPost = ({route}:DetailsPropsType) => {
                             {postTitle}
                         </Text>
                     </Pressable>
-                    <View style={{marginVertical:10}}>
-                        <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
-                    </View>
+                    <Pressable
+                        android_ripple={{foreground:true, color:'aqua'}}
+                        style={{marginVertical:10}}
+                        onPress={() => setDescriptionModalVisible(true)}
+                    >
+                        <Text style={{fontSize, color:'#567'}}>{postDescription}</Text>
+                    </Pressable>
                 </View>
                 <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -152,6 +217,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         backgroundColor:'rgba(0, 0, 0, 0.05)',
         transform:[{scale:1.4}, {translateX:-6}, {translateY:-4}]
+    },
+    textInput:{
+        backgroundColor:'rgba(0, 0, 0, 0.08)',
+        borderRadius:16,
+        paddingHorizontal:10,
+        fontSize:15
     },
     doneBtn:{
         height:48,
