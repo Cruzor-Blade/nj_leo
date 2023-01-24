@@ -4,6 +4,7 @@ import { Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View, 
 import { HomeStackParamsList } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
 import { TextInput } from 'react-native-gesture-handler';
+import Slider from '@react-native-community/slider';
 
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
@@ -18,11 +19,13 @@ const EditPost = ({route}:DetailsPropsType) => {
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
     const [postTitle, setPostTitle] = useState(item.title);
     const [postDescription, setPostDescription] = useState(item.description);
+    const [rating, setRating] = useState(30);
     const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
     const [focusedChip, setFocusedChip] = useState('M');
 
     const [titleModalVisible, setTitleModalVisible] = useState(false);
     const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
+    const [ratingModalVisible, setRatingModalVisible] = useState(false);
     
     const openImagePicker = async () => {
         try {
@@ -148,6 +151,62 @@ const EditPost = ({route}:DetailsPropsType) => {
         )
     };
 
+    type RatingModalPropsType = {
+        rating:number
+        setRating:React.Dispatch<React.SetStateAction<number>>
+        visible:boolean
+        onClosePress:() => void
+    };
+
+    const RatingModal = ({rating, setRating, visible, onClosePress}:RatingModalPropsType) => {
+        const [newRating, setNewRating] = useState(rating);
+        
+        const onDonePress = () => {
+            setRating(newRating);
+            onClosePress();
+        };
+
+        return (
+            <Modal
+                transparent={true}
+                animationType='fade'
+                statusBarTranslucent
+                visible={visible}
+            >
+                <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
+                    <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
+                        <View style={{marginBottom:10, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                            <Text style={{fontSize:17, fontWeight:'500'}}>
+                                Nom du business
+                            </Text>
+                            <Pressable
+                                style={styles.closeBtn}
+                                onPress={onClosePress}
+                                hitSlop={4}
+                            >
+                                <Text style={{fontWeight:'500', color:'#000', transform:[{scaleY:0.8}, {translateY:-1}]}}>
+                                    X
+                                </Text>
+                            </Pressable>
+                        </View>
+                        <Slider
+                            style={{width: '100%', height:40}}
+                            minimumValue={0}
+                            maximumValue={100}
+                            minimumTrackTintColor="#ffffff"
+                            maximumTrackTintColor="#000"
+                            onSlidingComplete={(value) => setNewRating(value)}
+                            value={newRating}
+                            step={5}
+                        />
+                        <Pressable onPress={onDonePress} style={styles.doneBtn}>
+                            <Text style={{fontSize:16, fontWeight:'500'}}>Ok</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        )
+    };
     return (
         <View style={{flex:1}}>
             <TitleModal
@@ -162,6 +221,13 @@ const EditPost = ({route}:DetailsPropsType) => {
                 description={postDescription}
                 onClosePress={() => setDescriptionModalVisible(false)}
             />
+        
+        <RatingModal
+            visible={ratingModalVisible}
+            rating={rating}
+            setRating={setRating}
+            onClosePress={() => setRatingModalVisible(false)}
+        />
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
@@ -188,7 +254,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         <Text style={{fontSize, color:'#567'}}>{postDescription}</Text>
                     </Pressable>
                 </View>
-                <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
+                <Pressable onPress={() => setRatingModalVisible(true)} style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
                         <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9, transform:[{scale:1.1}]}}/>
@@ -196,7 +262,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                     <Text>
 
                     </Text>
-                </View>
+                </Pressable>
                 <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
                     <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />

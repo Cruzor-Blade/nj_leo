@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/slider": "^4.4.1",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/stack": "^6.3.11",
     "react": "18.2.0",
@@ -25,7 +26,11 @@
     "@babel/runtime": "^7.20.0",
     "@react-native-community/eslint-config": "^3.0.0",
     "@tsconfig/react-native": "^2.0.2",
+    "@types/babel__core": "^7.20.0",
+    "@types/babel__preset-env": "^7.9.2",
+    "@types/eslint": "^8.4.10",
     "@types/jest": "^29.2.1",
+    "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.24",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
