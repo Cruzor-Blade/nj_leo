@@ -3,7 +3,7 @@ import Home from "../screens/Home";
 import { HomeStackParamsList } from "../global/types";
 import Details from "../screens/Details";
 import EditPost from "../screens/EditPost";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { Image, Linking, Pressable, StyleSheet, Text, View, } from "react-native";
 
 
 const Stack = createStackNavigator<HomeStackParamsList>();
@@ -26,8 +26,12 @@ const HomeStack = () => {
                             <View style={{alignItems:'center'}}>
                                 <Text style={{color:'#777', fontSize:16, marginRight:6}}>Suivez moi:</Text>
                                 <View style={{flexDirection:'row'}}>
-                                    <Image style={styles.socialIcon} source={require('../assets/youtube.png')}/>
-                                    <Image style={{...styles.socialIcon, transform:[{scale:0.95}]}} source={require('../assets/telegram.png')} />
+                                    <Pressable onPress={() => Linking.openURL('http://youtube.com')}>
+                                        <Image style={styles.socialIcon} source={require('../assets/youtube.png')}/>
+                                    </Pressable>
+                                    <Pressable onPress={() => Linking.openURL('http://telegram.com')}>
+                                        <Image style={{...styles.socialIcon, transform:[{scale:0.95}]}} source={require('../assets/telegram.png')} />
+                                    </Pressable>
                                 </View>
                             </View>
                         </View>

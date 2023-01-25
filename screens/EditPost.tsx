@@ -75,6 +75,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 animationType='fade'
                 statusBarTranslucent
                 visible={visible}
+                onRequestClose={onClosePress}
             >
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
@@ -128,6 +129,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 animationType='fade'
                 statusBarTranslucent
                 visible={visible}
+                onRequestClose={onClosePress}
             >
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
@@ -182,6 +184,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 animationType='fade'
                 statusBarTranslucent
                 visible={visible}
+                onRequestClose={onClosePress}
             >
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
@@ -250,6 +253,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 animationType='fade'
                 statusBarTranslucent
                 visible={visible}
+                onRequestClose={onClosePress}
             >
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>

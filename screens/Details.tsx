@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Image, Linking, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
 import { ratingColors } from './EditPost';
 
@@ -16,7 +16,14 @@ const Details = ({navigation, route}:DetailsPropsType) => {
 
     const onEditPress = () => {
         navigation.navigate('EditPost', {item})
-    }
+    };
+
+    const onSocialPress = (platform:'youtube'|'whatsapp'|'telegram') => {
+        if(item.socialLinks[platform]) {
+            Linking.openURL(item.socialLinks[platform] as string);
+        }
+    };
+    
     return (
         <View style={{flex:1, backgroundColor:'white'}}>
             <Pressable
@@ -48,9 +55,30 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                     </Text>
                 </View>
                 <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
-                    <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
-                    <Image style={{...styles.socialIcon, transform:[{scale:0.95}]}} source={require('../assets/telegram.png')} />
-                    <Image style={{...styles.socialIcon, transform:[{scale:0.9}]}} source={require('../assets/whatsapp.png')} />
+                    {
+                        item.socialLinks.youtube?
+                        <Pressable onPress={() => onSocialPress('youtube')}>
+                            <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
+                        </Pressable>
+                        :
+                        null
+                    }
+                    {
+                        item.socialLinks.telegram?
+                        <Pressable onPress={() => onSocialPress('telegram')}>
+                            <Image style={{...styles.socialIcon, transform:[{scale:0.95}]}} source={require('../assets/telegram.png')} />
+                        </Pressable>
+                        :
+                        null
+                    }
+                    {
+                        item.socialLinks.whatsapp?
+                        <Pressable onPress={() => onSocialPress('whatsapp')}>
+                            <Image style={{...styles.socialIcon, transform:[{scale:0.9}]}} source={require('../assets/whatsapp.png')} />
+                        </Pressable>
+                        :
+                        null
+                    }
                 </View>
             </ScrollView>
         </View>
