@@ -2,6 +2,7 @@ import React from "react";
 import { Image, LayoutChangeEvent, Pressable, StyleSheet, Text, View } from "react-native";
 import { CardType, HomeStackParamsList } from "../global/types";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { ratingColors } from "../screens/EditPost";
 
 
 type PostCardProps = {
@@ -43,7 +44,7 @@ const PostCard = ({ item, cardWidth, onLayout, navigation }: PostCardProps) => {
                 </View>
                 <View style={{marginBottom:10, flexDirection:'row', justifyContent:'flex-end', paddingHorizontal:30}}>
                     <Text style={{color:'#777'}}>fiabilité</Text>
-                    <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9}}/>
+                    <View style={{height:20, width:40, backgroundColor:ratingColors.filter(rating => rating.max - item.rating>=0 && item.rating -rating.min >=0)[0].color, marginLeft:10, borderRadius:9}}/>
                 </View>
             </Pressable>
         </View>

@@ -303,7 +303,7 @@ const EditPost = ({route}:DetailsPropsType) => {
         )
     };
     return (
-        <View style={{flex:1, backgroundColor:'whites'}}>
+        <View style={{flex:1, backgroundColor:'white'}}>
             <TitleModal
                 visible={titleModalVisible}
                 title={postTitle}
