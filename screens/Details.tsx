@@ -17,7 +17,7 @@ const Details = ({navigation, route}:DetailsPropsType) => {
         navigation.navigate('EditPost', {item})
     }
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor:'white'}}>
             <Pressable
                 style={styles.floatingButtonContainer}
                 android_ripple={{color:'#fff', foreground:true}}
@@ -35,7 +35,7 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                         <Text style={{fontSize, color:'#567'}}>{item.description}</Text>
                     </View>
                 </View>
-                <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
+                <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
                         <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9, transform:[{scale:1.1}]}}/>
@@ -44,10 +44,10 @@ const Details = ({navigation, route}:DetailsPropsType) => {
 
                     </Text>
                 </View>
-                <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
+                <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
                     <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
-                    <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
-                    <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
+                    <Image style={{...styles.socialIcon, transform:[{scale:0.95}]}} source={require('../assets/telegram.png')} />
+                    <Image style={{...styles.socialIcon, transform:[{scale:0.9}]}} source={require('../assets/whatsapp.png')} />
                 </View>
             </ScrollView>
         </View>

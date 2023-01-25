@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
@@ -15,7 +15,15 @@ const EditPost = ({route}:DetailsPropsType) => {
     const fontSize = 16;
 
     const imageDims = Image.resolveAssetSource(item.visuals[0].source);
-    
+    const ratingColors = [
+        {color:"#ff0000", min:0, max:20},
+        {color:"#ff8000", min:21, max:35},
+        {color:"grey", min:36, max:50},
+        {color:"#0000ff", min:51, max:60},
+        {color:"#0D98BA", min:61, max:80},
+        {color:"#00f700", min:81, max:100},
+    ]
+
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
     const [postTitle, setPostTitle] = useState(item.title);
     const [postDescription, setPostDescription] = useState(item.description);
@@ -176,8 +184,8 @@ const EditPost = ({route}:DetailsPropsType) => {
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
                         <View style={{marginBottom:10, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-                            <Text style={{fontSize:17, fontWeight:'500'}}>
-                                Nom du business
+                            <Text style={{fontSize:17, fontWeight:'500', color:'black'}}>
+                                Indice de fiabilité
                             </Text>
                             <Pressable
                                 style={styles.closeBtn}
@@ -189,16 +197,26 @@ const EditPost = ({route}:DetailsPropsType) => {
                                 </Text>
                             </Pressable>
                         </View>
+                        <Text style={{marginHorizontal:14, color:'gray'}}>{newRating+' %'}</Text>
+                        {/* Tells Typescript to ignore type checking for the slider component */}
+                        {/*
+                            // @ts-ignore */}
                         <Slider
                             style={{width: '100%', height:40}}
                             minimumValue={0}
                             maximumValue={100}
-                            minimumTrackTintColor="#ffffff"
-                            maximumTrackTintColor="#000"
-                            onSlidingComplete={(value) => setNewRating(value)}
+                            minimumTrackTintColor={ratingColors.filter(item => item.max - newRating>=0 && newRating -item.min >=0)[0].color}
+                            maximumTrackTintColor={ratingColors[0]}
+                            onValueChange={(value:number) => setNewRating(value)}
                             value={newRating}
-                            step={5}
+                            step={1}
+                            thumbTintColor={ratingColors.filter(item => item.max - newRating>=0 && newRating -item.min >=0)[0].color}
                         />
+                        <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+                            {
+                                ratingColors.map(item => <View key={item.color} style={{height:30, width:30, borderRadius:2, backgroundColor:item.color}} />)
+                            }
+                        </View>
                         <Pressable onPress={onDonePress} style={styles.doneBtn}>
                             <Text style={{fontSize:16, fontWeight:'500'}}>Ok</Text>
                         </Pressable>
@@ -208,7 +226,7 @@ const EditPost = ({route}:DetailsPropsType) => {
         )
     };
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor:'whites'}}>
             <TitleModal
                 visible={titleModalVisible}
                 title={postTitle}
@@ -222,12 +240,12 @@ const EditPost = ({route}:DetailsPropsType) => {
                 onClosePress={() => setDescriptionModalVisible(false)}
             />
         
-        <RatingModal
-            visible={ratingModalVisible}
-            rating={rating}
-            setRating={setRating}
-            onClosePress={() => setRatingModalVisible(false)}
-        />
+            <RatingModal
+                visible={ratingModalVisible}
+                rating={rating}
+                setRating={setRating}
+                onClosePress={() => setRatingModalVisible(false)}
+            />
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
@@ -254,16 +272,18 @@ const EditPost = ({route}:DetailsPropsType) => {
                         <Text style={{fontSize, color:'#567'}}>{postDescription}</Text>
                     </Pressable>
                 </View>
-                <Pressable onPress={() => setRatingModalVisible(true)} style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
+                <Pressable onPress={() => setRatingModalVisible(true)} style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
-                        <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9, transform:[{scale:1.1}]}}/>
+                        <View
+                            style={{...styles.ratingChip, backgroundColor:ratingColors.filter(item => item.max - rating>=0 && rating -item.min >=0)[0].color }} 
+                        />
                     </View>
                     <Text>
 
                     </Text>
                 </Pressable>
-                <View style={{borderTopWidth:1, borderColor:'#ccc', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
+                <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
                     <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
@@ -299,6 +319,13 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         overflow:'hidden'
+    },
+    ratingChip: {
+        height:20,
+        width:40,
+        marginLeft:10,
+        borderRadius:9,
+        transform:[{scale:1.1}]
     },
     socialIcon: {
         height:50,
