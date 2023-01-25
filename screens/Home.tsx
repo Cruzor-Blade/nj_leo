@@ -27,10 +27,11 @@ const height = wHeight - 64;
 
 const cards:CardType[] = [
     {
-        reliabilityColor:'blue',
         title:'HUhas ih',
         id:'Ijndasiu789231Iuindsa',
+        rating:14,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -43,10 +44,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'red',
         title:'HUhas ih',
         id:'dshjhaxuh%uy3276',
+        rating:74,
         description:" elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -63,10 +65,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'purple',
         title:'HUhas ih',
         id:'Ihnasuy&632(*&y32187',
+        rating:40,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -83,10 +86,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'gray',
         title:'HUhas ih',
         id:'Iun87321658Guasbnkyds',
+        rating:95,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam,  hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -103,10 +107,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'^&hj328yHihoinds9uJ90',
+        rating:63,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -123,10 +128,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'*neqw8B87312nbj&*9u423lkj9',
+        rating:74,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -143,10 +149,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'*nea8yuN8yheknwd8yuN8ye3q',
+        rating:85,
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -163,10 +170,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'*nds8ujn()ujndkas9080432',
+        rating:0,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -183,10 +191,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'(ujnmeaw9un90sau32-85478',
+        rating:25,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -203,10 +212,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'8ujnw890s7un)(8ujkewj90saudj',
+        rating:33,
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -223,10 +233,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'aquamarine',
         title:'HUhas ih',
         id:'(*ujnewa9ujnku90udas;kgr8y',
+        rating:72,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumtempora ratione aliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -243,10 +254,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'cyan',
         title:'HUhas ih',
         id:'()8jkeqw89nS8y8ihsendl',
+        rating:83,
         description:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',
@@ -263,10 +275,11 @@ const cards:CardType[] = [
         ]
     },
     {
-        reliabilityColor:'magenta',
         title:'HUhas ih',
         id:'9Ujkeq0i43298ydiouo08uad',
+        rating:43,
         description:"dolor sit amet consectetur adipisicing elit. Quam, tempora Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illum ratione aliquid impedit ea ullam qui illumLorem ipsum dolor sit amet consectetur adipisicing elit. Quam, tempora ratione aliquid impedit ea ullam qui illumaliquid impedit ea ullam qui illum hic eos consequuntur. Asperiores id, labore non cumque quidem tempora dolor. Distinctio, omnis?",
+        socialLinks:{},
         visuals:[
             {
                 type:'image',

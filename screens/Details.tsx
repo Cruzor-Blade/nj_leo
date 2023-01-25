@@ -2,6 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
+import { ratingColors } from './EditPost';
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
 
@@ -38,7 +39,9 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                 <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
                         <Text style={{fontSize, color:'black', fontWeight:'500'}}>fiabilité: </Text>
-                        <View style={{height:20, width:40, backgroundColor:item.reliabilityColor, marginLeft:10, borderRadius:9, transform:[{scale:1.1}]}}/>
+                        <View
+                            style={{...styles.ratingChip, backgroundColor:ratingColors.filter(rating => rating.max - item.rating>=0 && item.rating -rating.min >=0)[0].color }}
+                        />
                     </View>
                     <Text>
 
@@ -69,6 +72,13 @@ const styles = StyleSheet.create({
         overflow:'hidden',
         alignItems:'center',
         justifyContent:'center'
+    },
+    ratingChip: {
+        height:20,
+        width:40,
+        marginLeft:10,
+        borderRadius:9,
+        transform:[{scale:1.1}]
     },
     socialIcon: {
         height:50,

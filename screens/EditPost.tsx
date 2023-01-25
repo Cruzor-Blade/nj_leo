@@ -1,11 +1,19 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { useState } from 'react';
 import { Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { HomeStackParamsList } from '../global/types';
+import { HomeStackParamsList, socialLinks } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
 import { TextInput } from 'react-native-gesture-handler';
 import Slider from '@react-native-community/slider';
 
+export const ratingColors = [
+    {color:"#ff0000", min:0, max:20},
+    {color:"#ff8000", min:21, max:35},
+    {color:"grey", min:36, max:50},
+    {color:"#0000ff", min:51, max:60},
+    {color:"#0D98BA", min:61, max:80},
+    {color:"#00f700", min:81, max:100},
+]
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
 
@@ -15,25 +23,19 @@ const EditPost = ({route}:DetailsPropsType) => {
     const fontSize = 16;
 
     const imageDims = Image.resolveAssetSource(item.visuals[0].source);
-    const ratingColors = [
-        {color:"#ff0000", min:0, max:20},
-        {color:"#ff8000", min:21, max:35},
-        {color:"grey", min:36, max:50},
-        {color:"#0000ff", min:51, max:60},
-        {color:"#0D98BA", min:61, max:80},
-        {color:"#00f700", min:81, max:100},
-    ]
 
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
     const [postTitle, setPostTitle] = useState(item.title);
     const [postDescription, setPostDescription] = useState(item.description);
-    const [rating, setRating] = useState(30);
+    const [rating, setRating] = useState(item.rating);
     const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
-    const [focusedChip, setFocusedChip] = useState('M');
+    const [socialLinks, setSocialLinks] = useState(item.socialLinks);
 
     const [titleModalVisible, setTitleModalVisible] = useState(false);
     const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
     const [ratingModalVisible, setRatingModalVisible] = useState(false);
+    const [socialModalVisible, setSocialModalVisible] = useState(false);
+
     
     const openImagePicker = async () => {
         try {
@@ -77,7 +79,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
                     <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
                         <View style={{marginBottom:10, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-                            <Text style={{fontSize:17, fontWeight:'500'}}>
+                            <Text style={{fontSize:17, fontWeight:'500', color:'#000'}}>
                                 Nom du business
                             </Text>
                             <Pressable
@@ -225,6 +227,81 @@ const EditPost = ({route}:DetailsPropsType) => {
             </Modal>
         )
     };
+
+
+    type SocialModalPropsType = {
+        links:socialLinks
+        setLinks:React.Dispatch<React.SetStateAction<socialLinks>>
+        visible:boolean
+        onClosePress:() => void
+    };
+
+    const SocialModal = ({links, setLinks, visible, onClosePress}:SocialModalPropsType) => {
+        const [newLinks, setNewLinks] = useState(links);
+        
+        const onDonePress = () => {
+            setLinks(newLinks);
+            onClosePress();
+        };
+
+        return (
+            <Modal
+                transparent={true}
+                animationType='fade'
+                statusBarTranslucent
+                visible={visible}
+            >
+                <View style={{flex:1, alignItems:'center', justifyContent:'center',}} >
+                    <View style={{width:'80%', backgroundColor:'#fff', borderRadius:20, padding:16, elevation:3}}>
+                        <View style={{marginBottom:10, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                            <Text style={{fontSize:17, fontWeight:'500', color:'#000'}}>
+                                Liens sociaux
+                            </Text>
+                            <Pressable
+                                style={styles.closeBtn}
+                                onPress={onClosePress}
+                                hitSlop={4}
+                            >
+                                <Text style={{fontWeight:'500', color:'#000', transform:[{scaleY:0.8}, {translateY:-1}]}}>
+                                    X
+                                </Text>
+                            </Pressable>
+                        </View>
+                        <Text style={{color:'#333', marginBottom:6}}>
+                            Youtube :
+                        </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Écrivez ici...'
+                            value={links.youtube}
+                            onChangeText={text => setNewLinks({...newLinks, youtube:text})}
+                        />
+                        <Text style={{color:'#333', marginBottom:6, marginTop:12}}>
+                            Telegram :
+                        </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Écrivez ici...'
+                            value={links.telegram}
+                            onChangeText={text => setNewLinks({...newLinks, telegram:text})}
+                        />
+                        <Text style={{color:'#333', marginBottom:6, marginTop:12}}>
+                            WhatsApp :
+                        </Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder='Écrivez ici...'
+                            value={links.whatsapp}
+                            onChangeText={text => setNewLinks({...newLinks, whatsapp:text})}
+                        />
+                        <Pressable onPress={onDonePress} style={styles.doneBtn}>
+                            <Text style={{fontSize:16, fontWeight:'500'}}>Ok</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        )
+    };
     return (
         <View style={{flex:1, backgroundColor:'whites'}}>
             <TitleModal
@@ -245,6 +322,13 @@ const EditPost = ({route}:DetailsPropsType) => {
                 rating={rating}
                 setRating={setRating}
                 onClosePress={() => setRatingModalVisible(false)}
+            />
+
+            <SocialModal
+                visible={socialModalVisible}
+                links={socialLinks}
+                setLinks={setSocialLinks}
+                onClosePress={() => setSocialModalVisible(false)}
             />
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
@@ -283,11 +367,14 @@ const EditPost = ({route}:DetailsPropsType) => {
 
                     </Text>
                 </Pressable>
-                <View style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:10, paddingVertical:5}}>
+                <Pressable
+                    style={styles.socialsContainer}
+                    onPress={() => setSocialModalVisible(true)}
+                >
                     <Image style={styles.socialIcon} source={require('../assets/youtube.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
-                </View>
+                </Pressable>
             </ScrollView>
         </View>
     )
@@ -326,6 +413,14 @@ const styles = StyleSheet.create({
         marginLeft:10,
         borderRadius:9,
         transform:[{scale:1.1}]
+    },
+    socialsContainer:{
+        borderTopWidth:1,
+        borderColor:'#ddd',
+        width:'100%',
+        flexDirection:'row',
+        paddingHorizontal:10,
+        paddingVertical:5
     },
     socialIcon: {
         height:50,
