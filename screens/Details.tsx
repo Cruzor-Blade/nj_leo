@@ -31,7 +31,7 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                 android_ripple={{color:'#fff', foreground:true}}
                 onPress={onEditPress}
             >
-                <Text style={{color:'#fff', fontSize:16}}>Edit</Text>
+                <Image style={{height:40, width:40, resizeMode:'contain', tintColor:'#fff'}} source={require('../assets/edit.png')} />
             </Pressable>
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Image source={item.visuals[0].source} style={{width, height:displayHeight}} />

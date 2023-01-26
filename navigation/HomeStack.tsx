@@ -46,7 +46,9 @@ const HomeStack = () => {
             <Stack.Screen
                 name="EditPost"
                 component={EditPost}
-                options={{headerTitle:'Éditer le post'}}
+                options={({route}) => {
+                    return { headerTitle:route.params.item ? 'Éditer le post':'Publier un business' }
+                }}
             />
         </Stack.Navigator>
     )

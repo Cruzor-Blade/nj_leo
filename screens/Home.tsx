@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Animated, Dimensions, FlatList, View } from "react-native";
+import { Animated, Dimensions, FlatList, Pressable, Text, View, StyleSheet } from "react-native";
 import { CardType, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -326,16 +326,42 @@ const Home = ({navigation}: HomePropsType) => {
     };
 
   return (
-    <AnimatedFlatList
-        scrollEventThrottle={16}
-        bounces={false}
-        data={cards}
-        renderItem={RenderItem}
-        ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
-        keyExtractor={(item:any) => item.id}
-        {...{ onScroll }}
-    />
+      <View style={{flex:1}}>
+            <Pressable
+                style={styles.floatingButtonContainer}
+                android_ripple={{color:'#fff', foreground:true}}
+                onPress={() => navigation.navigate('EditPost', {item:null})}
+            >
+                <Text style={{color:'#fff', fontSize:30}}>+</Text>
+            </Pressable>
+          <AnimatedFlatList
+              scrollEventThrottle={16}
+              bounces={false}
+              data={cards}
+              renderItem={RenderItem}
+              ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
+              keyExtractor={(item:any) => item.id}
+              {...{ onScroll }}
+          />
+      </View>
   );
 };
 
+
+const styles = StyleSheet.create({
+    floatingButtonContainer:{
+        backgroundColor:'purple',
+        height:60,
+        width:60,
+        borderRadius:30,
+        elevation:10,
+        position:'absolute',
+        zIndex:9999,
+        bottom:50,
+        right:30,
+        overflow:'hidden',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+})
 export default Home;

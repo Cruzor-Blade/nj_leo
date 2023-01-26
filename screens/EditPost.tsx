@@ -15,21 +15,21 @@ export const ratingColors = [
     {color:"#00f700", min:81, max:100},
 ]
 
-type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
+type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'EditPost'>;
 
 const EditPost = ({route}:DetailsPropsType) => {
     const {item} = route.params;
     const {width} = useWindowDimensions();
     const fontSize = 16;
 
-    const imageDims = Image.resolveAssetSource(item.visuals[0].source);
+    const imageDims = Image.resolveAssetSource(item? item.visuals[0].source : require('../assets/no_image.jpg'));
 
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
-    const [postTitle, setPostTitle] = useState(item.title);
-    const [postDescription, setPostDescription] = useState(item.description);
-    const [rating, setRating] = useState(item.rating);
+    const [postTitle, setPostTitle] = useState(item?.title||'');
+    const [postDescription, setPostDescription] = useState(item?.description || '');
+    const [rating, setRating] = useState(item?.rating || 0);
     const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
-    const [socialLinks, setSocialLinks] = useState(item.socialLinks);
+    const [socialLinks, setSocialLinks] = useState(item?.socialLinks||{youtube:'', telegram:'', whatsapp:''});
 
     const [titleModalVisible, setTitleModalVisible] = useState(false);
     const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
@@ -337,7 +337,7 @@ const EditPost = ({route}:DetailsPropsType) => {
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
-                        source={postImgSource ? postImgSource : item.visuals[0].source}
+                        source={postImgSource ? postImgSource : item? item.visuals[0].source: require('../assets/no_image.jpg')}
                         style={{width, height:displayHeight}}
                     />
                 </Pressable>
@@ -349,7 +349,7 @@ const EditPost = ({route}:DetailsPropsType) => {
 
                     >
                         <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>
-                            {postTitle}
+                            {postTitle || '( Titre )'}
                         </Text>
                     </Pressable>
                     <Pressable
@@ -357,7 +357,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         style={{marginVertical:10}}
                         onPress={() => setDescriptionModalVisible(true)}
                     >
-                        <Text style={{fontSize, color:'#567'}}>{postDescription}</Text>
+                        <Text style={{fontSize, color:'#567'}}>{postDescription || '( Description )'}</Text>
                     </Pressable>
                 </View>
                 <Pressable onPress={() => setRatingModalVisible(true)} style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
