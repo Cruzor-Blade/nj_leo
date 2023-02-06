@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ActivityIndicator, Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList, socialLinks } from '../global/types';
@@ -23,6 +23,8 @@ const EditPost = ({route}:DetailsPropsType) => {
     const {item} = route.params;
     const {width} = useWindowDimensions();
     const fontSize = 16;
+
+    const initialPostImgURI = useRef(item?.visuals[0].source.uri).current;
 
     const [imageDims, setImageDims] = useState({height:1, width:1})
 
@@ -58,21 +60,46 @@ const EditPost = ({route}:DetailsPropsType) => {
     };
 
     const onSave = async () => {
+        let uploadObj:{
+            [key:string]:any
+        } = {
+            title:postTitle,
+            description:postDescription,
+            rating:rating,
+            socialLinks:socialLinks,
+            createdAt:new Date()
+        };
+
         try {
-            const imageUrl = await uploadImage();
-            console.log('Image Url: ', imageUrl);
-            const result = await firestore()
-                .collection('posts')
-                .add({
-                    title:postTitle,
-                    description:postDescription,
-                    rating:rating,
-                    visuals:[{type:'image', source:{uri:imageUrl}}],
-                    socialLinks:socialLinks,
-                    createdAt:new Date()
-                });
-            console.log('Updated Successfully');
-            ToastAndroid.show('Publié avec succès', 2000);
+            if(item) {
+                if( initialPostImgURI != postImgSource?.uri) { //the poster image for the current business have been updated
+                    const imageUrl = await uploadImage();
+                    console.log('Image Url: ', imageUrl);
+                    uploadObj.visuals = [{type:'image', source:{uri:imageUrl}}]
+                }
+                const result = await firestore()
+                    .collection('posts')
+                    .doc(item.id)
+                    .update(uploadObj);
+                console.log('Updated Successfully');
+            
+            } else {
+                const imageUrl = await uploadImage();
+                console.log('Image Url: ', imageUrl);
+                const result = await firestore()
+                    .collection('posts')
+                    .add({
+                        title:postTitle,
+                        description:postDescription,
+                        rating:rating,
+                        visuals:[{type:'image', source:{uri:imageUrl}}],
+                        socialLinks:socialLinks,
+                        createdAt:new Date()
+                    });
+
+                console.log('Published Successfully');
+            }
+            ToastAndroid.show('Publié avec succès', 1500);
         } catch (error) {
             console.log('An error occured: ', error);
         }
@@ -407,7 +434,7 @@ const EditPost = ({route}:DetailsPropsType) => {
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
-                        source={item && item.visuals[0].source.uri ? item.visuals[0].source:require('../assets/no_image.jpg')}
+                        source={ postImgSource?.uri? postImgSource: item && item.visuals[0].source.uri ? item.visuals[0].source:require('../assets/no_image.jpg')}
                         style={{width, height:displayHeight}}
                     />
                 </Pressable>
