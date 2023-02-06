@@ -379,6 +379,11 @@ const EditPost = ({route}:DetailsPropsType) => {
                     <Image style={styles.socialIcon} source={require('../assets/telegram.png')} />
                     <Image style={styles.socialIcon} source={require('../assets/whatsapp.png')} />
                 </Pressable>
+                <Pressable
+                    android_ripple={{foreground:true, color:'#fff'}}
+                    onPress={() => {}} style={styles.saveBtn}>
+                    <Text style={{fontSize:16, fontWeight:'500', color:'#fff'}}>Sauvegarder</Text>
+                </Pressable>
             </ScrollView>
         </View>
     )
@@ -432,7 +437,17 @@ const styles = StyleSheet.create({
         resizeMode:'contain',
         marginVertical:5,
         marginHorizontal:10
-    }
+    },
+    saveBtn:{
+        height:48,
+        width:'90%',
+        backgroundColor:'#000080',
+        marginTop:20,
+        borderRadius:20,
+        alignItems:'center',
+        justifyContent:'center',
+        overflow:'hidden'
+    },
 })
 
 export default EditPost;

@@ -47,7 +47,19 @@ const HomeStack = () => {
                 name="EditPost"
                 component={EditPost}
                 options={({route}) => {
-                    return { headerTitle:route.params.item ? 'Éditer le post':'Publier un business' }
+                    return {
+                        headerTitle:route.params.item ? 'Éditer le post':'Publier un business',
+                        headerRight:route.params.item ? () => (
+                                <View style={{marginRight:20, borderRadius:30, overflow:'hidden'}}>
+                                    <Pressable
+                                        style={{paddingVertical:10, paddingHorizontal:14}}
+                                        android_ripple={{color:'grey'}}
+                                    >
+                                        <Image source={require('../assets/bin.png')} style={{height:30, width:24, resizeMode:'contain'}}/>
+                                    </Pressable>
+                                </View>
+                            ):undefined
+                    }
                 }}
             />
         </Stack.Navigator>
