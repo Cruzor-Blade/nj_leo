@@ -67,7 +67,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                     title:postTitle,
                     description:postDescription,
                     rating:rating,
-                    images:[imageUrl],
+                    visuals:[{type:'image', source:{uri:imageUrl}}],
                     socialLinks:socialLinks,
                     createdAt:new Date()
                 });

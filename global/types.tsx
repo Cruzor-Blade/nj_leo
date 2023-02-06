@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from "react-native/types"
+import { ImageSourcePropType, ImageURISource } from "react-native/types"
 
 export type CardType = {
     id:string
@@ -21,7 +21,7 @@ export type socialLinks = {
 
 type VisualItem = {
     type:'image'
-    source:ImageSourcePropType
+    source:ImageURISource
 }
 
 export type HomeStackParamsList = {

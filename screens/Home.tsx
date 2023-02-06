@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Animated, Dimensions, FlatList, Pressable, Text, View, StyleSheet } from "react-native";
 import { CardType, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
-
+import firestore from '@react-native-firebase/firestore';
 
 const imgs = {
     card1:require('../assets/card1.jpg'),
@@ -299,6 +299,8 @@ const cards:CardType[] = [
 
 type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation}: HomePropsType) => {
+    const [posts, setPosts] = useState<never[]|CardType[]>([]);
+    
     const y = new Animated.Value(0);
     
     const [totalCardHeights, setTotalCardHeights] = useState<number[]>([]); //Array containing the heights of all the rendered cards
@@ -310,6 +312,27 @@ const Home = ({navigation}: HomePropsType) => {
         };
         return sum;
     };
+
+    const fetchPosts = async () => {
+        let fetchedPosts:CardType[] = [];
+        const result = await firestore()
+            .collection('posts')
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        result.forEach(document => {
+            let refactoredDoc = document.data();
+            refactoredDoc.id = document.id;
+            fetchedPosts.push(refactoredDoc as CardType);
+        });
+
+        console.log(fetchedPosts);
+        setPosts(fetchedPosts)
+    }
+
+    useEffect(() => {
+        fetchPosts()
+    }, []);
 
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
         useNativeDriver: true,
@@ -337,7 +360,7 @@ const Home = ({navigation}: HomePropsType) => {
           <AnimatedFlatList
               scrollEventThrottle={16}
               bounces={false}
-              data={cards}
+              data={posts}
               renderItem={RenderItem}
               ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
               keyExtractor={(item:any) => item.id}

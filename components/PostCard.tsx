@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Image, LayoutChangeEvent, Pressable, StyleSheet, Text, View } from "react-native";
 import { CardType, HomeStackParamsList } from "../global/types";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -14,14 +14,25 @@ type PostCardProps = {
 }
 
 const PostCard = ({ item, cardWidth, onLayout, navigation }: PostCardProps) => {
-
+    const [imageDims, setImageDims] = useState({width:1, height:1});
+    
     const onPress = () => {
         navigation.navigate('Details', {item})
     };
 
-    const imageDims = Image.resolveAssetSource(item.visuals[0].source);
+    // const imageDims = Image.getSize(item.visuals[0].source);
     const displayHeight = (cardWidth/imageDims.width)*imageDims.height;
 
+    useEffect(() => {
+        if(item.visuals[0].source.uri){
+            Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
+                setImageDims({width, height});
+            })
+        } else {
+            const imageDims = Image.resolveAssetSource(require('../assets/no_image.jpg'));
+            setImageDims({width:imageDims.width, height:imageDims.height})
+        }
+    }, []);
     return (
         <View
             style={[styles.card, {width:cardWidth, elevation:10, shadowColor:'rgba(0, 0, 0, 0.5)', backgroundColor:'#fff', overflow:'hidden'}]}
@@ -33,7 +44,7 @@ const PostCard = ({ item, cardWidth, onLayout, navigation }: PostCardProps) => {
                 onPress={onPress}
             >
 
-                <Image source={item.visuals[0].source} style={{height:displayHeight, width:cardWidth, resizeMode:'stretch'}} />
+                <Image source={item.visuals[0].source.uri?item.visuals[0].source:require('../assets/no_image.jpg')} style={{height:displayHeight, width:cardWidth, resizeMode:'stretch'}} />
                 <View style={styles.cardBottom}>
                     <Text style={{fontSize:20, color:'#000', fontWeight:'500'}}>
                         {item.title}
