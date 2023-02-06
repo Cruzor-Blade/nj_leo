@@ -1,5 +1,5 @@
+import {useEffect, useState} from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { useState } from 'react';
 import { ActivityIndicator, Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList, socialLinks } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
@@ -24,7 +24,7 @@ const EditPost = ({route}:DetailsPropsType) => {
     const {width} = useWindowDimensions();
     const fontSize = 16;
 
-    const imageDims = Image.resolveAssetSource(item? item.visuals[0].source : require('../assets/no_image.jpg'));
+    const [imageDims, setImageDims] = useState({height:1, width:1})
 
     const [displayHeight, setDisplayHeight] = useState((width/imageDims.width)*imageDims.height);
     const [postTitle, setPostTitle] = useState(item?.title||'');
@@ -118,6 +118,18 @@ const EditPost = ({route}:DetailsPropsType) => {
         visible:boolean
         onClosePress:() => void
     };
+
+    useEffect(() => {
+
+        if(item && item.visuals[0].source.uri){
+            Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
+                setImageDims({width, height});
+            })
+        } else {
+            const imageDims = Image.resolveAssetSource(require('../assets/no_image.jpg'));
+            setImageDims({width:imageDims.width, height:imageDims.height})
+        }
+    }, []);
 
     const TitleModal = ({title, setTitle, visible, onClosePress}:TitleModalPropsType) => {
         const [newTitle, setNewTitle] = useState(title);
@@ -395,7 +407,7 @@ const EditPost = ({route}:DetailsPropsType) => {
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
-                        source={postImgSource ? postImgSource : item? item.visuals[0].source: require('../assets/no_image.jpg')}
+                        source={item && item.visuals[0].source.uri ? item.visuals[0].source:require('../assets/no_image.jpg')}
                         style={{width, height:displayHeight}}
                     />
                 </Pressable>

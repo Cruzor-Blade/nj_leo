@@ -44,7 +44,10 @@ const PostCard = ({ item, cardWidth, onLayout, navigation }: PostCardProps) => {
                 onPress={onPress}
             >
 
-                <Image source={item.visuals[0].source.uri?item.visuals[0].source:require('../assets/no_image.jpg')} style={{height:displayHeight, width:cardWidth, resizeMode:'stretch'}} />
+                <Image
+                    source={item.visuals[0].source.uri?item.visuals[0].source:require('../assets/no_image.jpg')}
+                    style={{height:displayHeight, width:cardWidth, resizeMode:'stretch'}}
+                />
                 <View style={styles.cardBottom}>
                     <Text style={{fontSize:20, color:'#000', fontWeight:'500'}}>
                         {item.title}

@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Image, Linking, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -11,7 +12,8 @@ const Details = ({navigation, route}:DetailsPropsType) => {
     const {width} = useWindowDimensions();
     const fontSize = 16;
 
-    const imageDims = Image.resolveAssetSource(item.visuals[0].source);
+    const [imageDims, setImageDims] = useState({height:1, width:1});
+
     const displayHeight = (width/imageDims.width)*imageDims.height;
 
     const onEditPress = () => {
@@ -23,7 +25,17 @@ const Details = ({navigation, route}:DetailsPropsType) => {
             Linking.openURL(item.socialLinks[platform] as string);
         }
     };
-    
+
+    useEffect(() => {
+        if(item.visuals[0].source.uri){
+            Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
+                setImageDims({width, height});
+            })
+        } else {
+            const imageDims = Image.resolveAssetSource(require('../assets/no_image.jpg'));
+            setImageDims({width:imageDims.width, height:imageDims.height})
+        }
+    }, []);
     return (
         <View style={{flex:1, backgroundColor:'white'}}>
             <Pressable
@@ -31,10 +43,16 @@ const Details = ({navigation, route}:DetailsPropsType) => {
                 android_ripple={{color:'#fff', foreground:true}}
                 onPress={onEditPress}
             >
-                <Image style={{height:40, width:40, resizeMode:'contain', tintColor:'#fff'}} source={require('../assets/edit.png')} />
+                <Image
+                    source={require('../assets/edit.png')}
+                    style={{height:40, width:40, resizeMode:'contain', tintColor:'#fff'}}
+                />
             </Pressable>
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
-                <Image source={item.visuals[0].source} style={{width, height:displayHeight}} />
+                <Image
+                    source={item.visuals[0].source.uri?item.visuals[0].source:require('../assets/no_image.jpg')}
+                    style={{width, height:displayHeight}}
+                />
                 <View style={{paddingHorizontal:10, paddingVertical:5}}>
                     <View style={{marginTop:10, flexWrap:'wrap'}}>
                         <Text style={{fontSize:Math.round(fontSize*1.2), fontWeight:'500', color:'#000'}}>{item.title}</Text>
