@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "269359575496",
+    "project_id": "nj-leo",
+    "storage_bucket": "nj-leo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269359575496:android:8774a6aeab7371ad7250fd",
+        "android_client_info": {
+          "package_name": "com.nj_leo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269359575496-id1hiujg37fseiiv7u0j09dsdvpsecv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6CdYSv2I3baa_BIEJCgxE6OFmd1GIaDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269359575496-id1hiujg37fseiiv7u0j09dsdvpsecv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,6 +5,8 @@ import { HomeStackParamsList, socialLinks } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
 import { TextInput } from 'react-native-gesture-handler';
 import Slider from '@react-native-community/slider';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 export const ratingColors = [
     {color:"#ff0000", min:0, max:20},
@@ -30,6 +32,7 @@ const EditPost = ({route}:DetailsPropsType) => {
     const [rating, setRating] = useState(item?.rating || 0);
     const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
     const [socialLinks, setSocialLinks] = useState(item?.socialLinks||{youtube:'', telegram:'', whatsapp:''});
+    const [uploading, setUploading] = useState(false);
 
     const [titleModalVisible, setTitleModalVisible] = useState(false);
     const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
@@ -54,6 +57,59 @@ const EditPost = ({route}:DetailsPropsType) => {
         }
     };
 
+    const onSave = async () => {
+        try {
+            const imageUrl = await uploadImage();
+            console.log('Image Url: ', imageUrl);
+            const result = await firestore()
+                .collection('posts')
+                .add({
+                    title:postTitle,
+                    description:postDescription,
+                    rating:rating,
+                    images:[imageUrl],
+                    socialLinks:socialLinks
+                });
+            console.log('Updated Successfully');
+        } catch (error) {
+            console.log('An error occured: ', error);
+        }
+            
+    }
+    
+    const uploadImage = async () => {
+        if( !postImgSource?.uri ) {
+            return null;
+        }
+        const uploadUri = postImgSource.uri;
+        let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    
+        // Add timestamp to File Name
+        const extension = filename.split('.').pop(); 
+        const name = filename.split('.').slice(0, -1).join('.');
+        filename = name + Date.now() + '.' + extension;
+    
+        setUploading(true);
+        
+        const storageRef = storage().ref(`photos/business_poster/${filename}`);
+        const task = storageRef.putFile(uploadUri);
+    
+        // Set transferred state
+
+        try {
+            await task;
+    
+            const url = await storageRef.getDownloadURL();
+    
+            setUploading(false);
+            return url;
+    
+        } catch (e) {
+            console.log(e);
+            return null;
+        }    
+    };
+    
     type TitleModalPropsType = {
         title:string
         setTitle:React.Dispatch<React.SetStateAction<string>>
@@ -381,7 +437,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 </Pressable>
                 <Pressable
                     android_ripple={{foreground:true, color:'#fff'}}
-                    onPress={() => {}} style={styles.saveBtn}>
+                    onPress={onSave} style={styles.saveBtn}>
                     <Text style={{fontSize:16, fontWeight:'500', color:'#fff'}}>Sauvegarder</Text>
                 </Pressable>
             </ScrollView>
