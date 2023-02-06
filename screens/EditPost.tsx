@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { useState } from 'react';
-import { Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Image, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList, socialLinks } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
 import { TextInput } from 'react-native-gesture-handler';
@@ -68,9 +68,11 @@ const EditPost = ({route}:DetailsPropsType) => {
                     description:postDescription,
                     rating:rating,
                     images:[imageUrl],
-                    socialLinks:socialLinks
+                    socialLinks:socialLinks,
+                    createdAt:new Date()
                 });
             console.log('Updated Successfully');
+            ToastAndroid.show('Publié avec succès', 2000);
         } catch (error) {
             console.log('An error occured: ', error);
         }
@@ -439,6 +441,12 @@ const EditPost = ({route}:DetailsPropsType) => {
                     android_ripple={{foreground:true, color:'#fff'}}
                     onPress={onSave} style={styles.saveBtn}>
                     <Text style={{fontSize:16, fontWeight:'500', color:'#fff'}}>Sauvegarder</Text>
+                    {
+                        uploading?
+                            <ActivityIndicator style={{margin:10, transform:[{translateY:3}]}} size={24} color="#ccc" />
+                        :
+                        null
+                    }
                 </Pressable>
             </ScrollView>
         </View>
@@ -502,7 +510,8 @@ const styles = StyleSheet.create({
         borderRadius:20,
         alignItems:'center',
         justifyContent:'center',
-        overflow:'hidden'
+        overflow:'hidden',
+        flexDirection:'row'
     },
 })
 
