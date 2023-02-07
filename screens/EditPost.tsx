@@ -19,7 +19,7 @@ export const ratingColors = [
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'EditPost'>;
 
-const EditPost = ({route}:DetailsPropsType) => {
+const EditPost = ({navigation, route}:DetailsPropsType) => {
     const {item} = route.params;
     const {width} = useWindowDimensions();
     const fontSize = 16;
@@ -32,7 +32,7 @@ const EditPost = ({route}:DetailsPropsType) => {
     const [postTitle, setPostTitle] = useState(item?.title||'');
     const [postDescription, setPostDescription] = useState(item?.description || '');
     const [rating, setRating] = useState(item?.rating || 0);
-    const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(null);
+    const [postImgSource, setPostImgSource] = useState<{uri: string|undefined, type:string} | null>(item?.visuals[0].source.uri? {uri: item.visuals[0].source.uri, type:'image'}: null);
     const [socialLinks, setSocialLinks] = useState(item?.socialLinks||{youtube:'', telegram:'', whatsapp:''});
     const [uploading, setUploading] = useState(false);
 
@@ -100,6 +100,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                 console.log('Published Successfully');
             }
             ToastAndroid.show('Publié avec succès', 1500);
+            navigation.navigate('Home', {shouldRefresh:true});
         } catch (error) {
             console.log('An error occured: ', error);
         }
@@ -141,7 +142,6 @@ const EditPost = ({route}:DetailsPropsType) => {
     
     
     useEffect(() => {
-
         if(item && item.visuals[0].source.uri){
             Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
                 setImageDims({width, height});
@@ -376,7 +376,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder='Écrivez ici...'
-                            value={links.youtube}
+                            value={newLinks.youtube}
                             onChangeText={text => setNewLinks({...newLinks, youtube:text})}
                         />
                         <Text style={{color:'#333', marginBottom:6, marginTop:12}}>
@@ -385,7 +385,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder='Écrivez ici...'
-                            value={links.telegram}
+                            value={newLinks.telegram}
                             onChangeText={text => setNewLinks({...newLinks, telegram:text})}
                         />
                         <Text style={{color:'#333', marginBottom:6, marginTop:12}}>
@@ -394,7 +394,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         <TextInput
                             style={styles.textInput}
                             placeholder='Écrivez ici...'
-                            value={links.whatsapp}
+                            value={newLinks.whatsapp}
                             onChangeText={text => setNewLinks({...newLinks, whatsapp:text})}
                         />
                         <Pressable onPress={onDonePress} style={styles.doneBtn}>
@@ -456,7 +456,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                         style={{marginVertical:10}}
                         onPress={() => setDescriptionModalVisible(true)}
                     >
-                        <Text style={{fontSize, color:'#567'}}>{postDescription || '( Description )'}</Text>
+                        <Text style={{fontSize, color:'#567'}}>{postDescription || '\n( Description )\n'}</Text>
                     </Pressable>
                 </View>
                 <Pressable onPress={() => setRatingModalVisible(true)} style={{borderTopWidth:1, borderColor:'#ddd', width:'100%', flexDirection:'row', paddingHorizontal:14, paddingVertical:8}}>
