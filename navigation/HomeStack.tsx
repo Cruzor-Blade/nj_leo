@@ -80,7 +80,7 @@ const HomeStack = () => {
                 }
                 ToastAndroid.show('Publication suprimée', 1500);
                 setModalVisible(false);
-                navigation.popToTop();
+                navigation.navigate('Home', {shouldRefresh:true});
             } catch (error) {
                 console.log("An error occured: ", error)
                 ToastAndroid.show('Une erreur est survenue', 1500);

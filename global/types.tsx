@@ -30,7 +30,9 @@ type VisualItem = {
 }
 
 export type HomeStackParamsList = {
-    Home:undefined
+    Home:{
+        shouldRefresh?:boolean
+    }
     Details:{
         item:CardType
     }

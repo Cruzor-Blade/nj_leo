@@ -5,6 +5,7 @@ import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
 import { firestore } from "../App";
 import { cards } from "../assets/dummyCards";
+import { useFocusEffect } from "@react-navigation/native";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -15,7 +16,7 @@ const height = wHeight - 64;
 
 
 type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
-const Home = ({navigation}: HomePropsType) => {
+const Home = ({navigation, route}: HomePropsType) => {
     const [posts, setPosts] = useState<CardType[]>([]);
     const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
     const [loading, setLoading] = useState(false);
@@ -75,6 +76,13 @@ const Home = ({navigation}: HomePropsType) => {
         setStartAfterDate(result.docs[result.docs.length-1].data().createdAt);
         setLoading(false);
     };
+
+    useFocusEffect(() => {
+        if(route.params?.shouldRefresh) { //if shouldRefresh is enabled, refetch posts and disable shouldRefresh
+            fetchPosts(3, undefined, true);
+            navigation.setParams({shouldRefresh:false})
+        }
+    });
 
     useEffect(() => {
         fetchPosts(3).then(() => fetchPosts(5, startAfterDate));
