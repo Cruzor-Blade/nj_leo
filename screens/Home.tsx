@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Animated, Dimensions, FlatList, Pressable, Text, View, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Dimensions, FlatList, Image, Pressable, Text, View, StyleSheet } from "react-native";
 import { CardType, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -35,11 +35,13 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -52,15 +54,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card3
+                source:imgs.card3,
+                dimensions:{height:Image.resolveAssetSource(imgs.card3).height, width:Image.resolveAssetSource(imgs.card3).width}
             },
             {
                 type:'image',
-                source:imgs.card5
+                source:imgs.card5,
+                dimensions:{height:Image.resolveAssetSource(imgs.card5).height, width:Image.resolveAssetSource(imgs.card5).width}
             },
         ]
     },
@@ -73,15 +78,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card10
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
             {
                 type:'image',
-                source:imgs.card4
+                source:imgs.card4,
+                dimensions:{height:Image.resolveAssetSource(imgs.card4).height, width:Image.resolveAssetSource(imgs.card4).width}
             },
             {
                 type:'image',
-                source:imgs.card5
+                source:imgs.card5,
+                dimensions:{height:Image.resolveAssetSource(imgs.card5).height, width:Image.resolveAssetSource(imgs.card5).width}
             },
         ]
     },
@@ -94,15 +102,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card7
+                source:imgs.card7,
+                dimensions:{height:Image.resolveAssetSource(imgs.card7).height, width:Image.resolveAssetSource(imgs.card7).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -115,15 +126,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card6
+                source:imgs.card6,
+                dimensions:{height:Image.resolveAssetSource(imgs.card6).height, width:Image.resolveAssetSource(imgs.card6).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -136,15 +150,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card8
+                source:imgs.card8,
+                dimensions:{height:Image.resolveAssetSource(imgs.card8).height, width:Image.resolveAssetSource(imgs.card8).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -157,15 +174,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card5
+                source:imgs.card5,
+                dimensions:{height:Image.resolveAssetSource(imgs.card5).height, width:Image.resolveAssetSource(imgs.card5).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -177,16 +197,19 @@ const cards:CardType[] = [
         socialLinks:{},
         visuals:[
             {
-                type:'image',
-                source:imgs.card6
+                type:'image',               
+                source:imgs.card6,
+                dimensions:{height:Image.resolveAssetSource(imgs.card6).height, width:Image.resolveAssetSource(imgs.card6).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -199,15 +222,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card8
+                source:imgs.card8,
+                dimensions:{height:Image.resolveAssetSource(imgs.card8).height, width:Image.resolveAssetSource(imgs.card8).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -220,15 +246,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card9
+                source:imgs.card9,
+                dimensions:{height:Image.resolveAssetSource(imgs.card9).height, width:Image.resolveAssetSource(imgs.card9).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -241,15 +270,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -262,15 +294,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -283,15 +318,18 @@ const cards:CardType[] = [
         visuals:[
             {
                 type:'image',
-                source:imgs.card9
+                source:imgs.card9,
+                dimensions:{height:Image.resolveAssetSource(imgs.card9).height, width:Image.resolveAssetSource(imgs.card9).width}
             },
             {
                 type:'image',
-                source:imgs.card2
+                source:imgs.card2,
+                dimensions:{height:Image.resolveAssetSource(imgs.card2).height, width:Image.resolveAssetSource(imgs.card2).width}
             },
             {
                 type:'image',
-                source:imgs.card1
+                source:imgs.card1,
+                dimensions:{height:Image.resolveAssetSource(imgs.card1).height, width:Image.resolveAssetSource(imgs.card1).width}
             },
         ]
     },
@@ -301,7 +339,7 @@ type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation}: HomePropsType) => {
     const [posts, setPosts] = useState<never[]|CardType[]>([]);
     
-    const y = new Animated.Value(0);
+    const y = useRef(new Animated.Value(0)).current;
     
     const [totalCardHeights, setTotalCardHeights] = useState<number[]>([]); //Array containing the heights of all the rendered cards
   
@@ -333,6 +371,16 @@ const Home = ({navigation}: HomePropsType) => {
     useEffect(() => {
         fetchPosts()
     }, []);
+    // useEffect(() => {
+    //     if(item.visuals[0].source.uri){
+    //         Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
+    //             setImageDims({width, height});
+    //         })
+    //     } else {
+    //         const imageDims = Image.resolveAssetSource(item.visuals[0].source||require('../assets/no_image.jpg'));
+    //         setImageDims({width:imageDims.width, height:imageDims.height})
+    //     }
+    // }, []);
 
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
         useNativeDriver: true,
@@ -357,15 +405,16 @@ const Home = ({navigation}: HomePropsType) => {
             >
                 <Text style={{color:'#fff', fontSize:30}}>+</Text>
             </Pressable>
-          <AnimatedFlatList
-              scrollEventThrottle={16}
-              bounces={false}
-              data={posts}
-              renderItem={RenderItem}
-              ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
-              keyExtractor={(item:any) => item.id}
-              {...{ onScroll }}
-          />
+            <AnimatedFlatList
+                scrollEventThrottle={16}
+                bounces={false}
+                data={cards}
+                renderItem={RenderItem}
+                ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
+                keyExtractor={(item:any) => item.id}
+                {...{ onScroll }}
+                extraData={y}
+            />
       </View>
   );
 };

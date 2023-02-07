@@ -50,7 +50,7 @@ const Details = ({navigation, route}:DetailsPropsType) => {
             </Pressable>
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Image
-                    source={item.visuals[0].source.uri?item.visuals[0].source:require('../assets/no_image.jpg')}
+                    source={item.visuals[0].source?item.visuals[0].source:require('../assets/no_image.jpg')}
                     style={{width, height:displayHeight}}
                 />
                 <View style={{paddingHorizontal:10, paddingVertical:5}}>

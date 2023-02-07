@@ -436,7 +436,7 @@ const EditPost = ({route}:DetailsPropsType) => {
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Pressable onPress={openImagePicker} >
                     <Image
-                        source={ postImgSource?.uri? postImgSource: item && item.visuals[0].source.uri ? item.visuals[0].source:require('../assets/no_image.jpg')}
+                        source={ postImgSource?.uri? postImgSource: item && item.visuals[0].source ? item.visuals[0].source:require('../assets/no_image.jpg')}
                         style={{width, height:displayHeight}}
                     />
                 </Pressable>

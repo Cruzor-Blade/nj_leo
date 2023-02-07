@@ -20,6 +20,7 @@ export type socialLinks = {
 };
 
 type VisualItem = {
+    dimensions:{height:number, width:number}
     type:'image'
     source:ImageURISource
 }
