@@ -18,6 +18,7 @@ type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation}: HomePropsType) => {
     const [posts, setPosts] = useState<CardType[]>([]);
     const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
+    const [loading, setLoading] = useState(false);
 
     const y = useRef(new Animated.Value(0)).current;
     
@@ -31,7 +32,10 @@ const Home = ({navigation}: HomePropsType) => {
         return sum;
     };
 
-    const fetchPosts = async (number:number, fromDate?:Date|null) => {
+    const fetchPosts = async (number:number, fromDate?:Date|null, reset?:boolean) => {
+        if(loading) return;
+        setLoading(true);
+
         let fetchedPosts:CardType[] = [];
         let query = firestore.collection('posts').orderBy('createdAt', 'desc');
             
@@ -41,6 +45,7 @@ const Home = ({navigation}: HomePropsType) => {
 
         if(result.empty) {
             console.log('List empty')
+            setLoading(false);
             return;   
         };
         for (const document of result.docs) {
@@ -62,8 +67,13 @@ const Home = ({navigation}: HomePropsType) => {
             })
         };
 
-        setPosts(posts.concat(fetchedPosts));
+        if(reset) {
+            setPosts(fetchedPosts);
+        } else {
+            setPosts(posts.concat(fetchedPosts));
+        }
         setStartAfterDate(result.docs[result.docs.length-1].data().createdAt);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -104,6 +114,8 @@ const Home = ({navigation}: HomePropsType) => {
                 extraData={y}
                 onEndReachedThreshold={0.2}
                 onEndReached={() => fetchPosts(4, startAfterDate)}
+                refreshing={loading}
+                onRefresh={() => fetchPosts(3, undefined, true)}
             />
       </View>
   );

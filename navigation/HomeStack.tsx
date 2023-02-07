@@ -52,7 +52,11 @@ const ConfirmDeleteModal = ({ visible, onClosePress, onCancel, onConfirm}:Confir
                         <Pressable onPress={onCancel} style={styles.confirmBtn}>
                             <Text style={{fontSize:16, fontWeight:'500'}}>Annuler</Text>
                         </Pressable>
-                        <Pressable onPress={onConfirmPress} style={{...styles.confirmBtn, backgroundColor:'darkorange'}}>
+                        <Pressable
+                            android_ripple={{color:'red', foreground:true}}    
+                            onPress={onConfirmPress}
+                            style={{...styles.confirmBtn, backgroundColor:'darkorange'}}
+                        >
                             <Text style={{fontSize:16, fontWeight:'500', color:'rgba(255, 255, 25, 0.7)'}}>Confirmer</Text>
                         </Pressable>
                     </View>
@@ -66,7 +70,7 @@ const ConfirmDeleteModal = ({ visible, onClosePress, onCancel, onConfirm}:Confir
 const HomeStack = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const deletePost = async(item:CardType|null) => {
+    const deletePost = async(item:CardType|null, navigation:any) => {
         if(item) {
             try {
                 await firestore.doc(`posts/${item.id}`).delete();
@@ -76,7 +80,9 @@ const HomeStack = () => {
                 }
                 ToastAndroid.show('Publication suprimée', 1500);
                 setModalVisible(false);
+                navigation.popToTop();
             } catch (error) {
+                console.log("An error occured: ", error)
                 ToastAndroid.show('Une erreur est survenue', 1500);
             }
         }
@@ -119,7 +125,7 @@ const HomeStack = () => {
             <Stack.Screen
                 name="EditPost"
                 component={EditPost}
-                options={({route}) => {
+                options={({navigation, route}) => {
                     return {
                         headerTitle:route.params.item ? 'Éditer le post':'Publier un business',
                         headerRight:route.params.item ? () => (
@@ -135,7 +141,7 @@ const HomeStack = () => {
                                         visible={modalVisible}
                                         onCancel={() => setModalVisible(false)}
                                         onClosePress={() => setModalVisible(false)}
-                                        onConfirm={() => deletePost(route.params.item)}
+                                        onConfirm={() => deletePost(route.params.item, navigation)}
                                     />
                                 </View>
                             ):undefined
