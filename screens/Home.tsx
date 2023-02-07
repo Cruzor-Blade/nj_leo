@@ -3,7 +3,7 @@ import { Animated, Dimensions, FlatList, Pressable, Text, View, StyleSheet } fro
 import { CardType, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
-import firestore from '@react-native-firebase/firestore';
+import { firestore } from "../App";
 
 const imgs = {
     card1:require('../assets/card1.jpg'),
@@ -315,7 +315,7 @@ const Home = ({navigation}: HomePropsType) => {
 
     const fetchPosts = async () => {
         let fetchedPosts:CardType[] = [];
-        const result = await firestore()
+        const result = await firestore
             .collection('posts')
             .orderBy('createdAt', 'desc')
             .get();

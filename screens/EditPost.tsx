@@ -5,8 +5,8 @@ import { HomeStackParamsList, socialLinks } from '../global/types';
 import { openPicker } from "react-native-image-crop-picker";
 import { TextInput } from 'react-native-gesture-handler';
 import Slider from '@react-native-community/slider';
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
+import { firestore } from '../App';
+import { storage } from '../App';
 
 export const ratingColors = [
     {color:"#ff0000", min:0, max:20},
@@ -77,7 +77,7 @@ const EditPost = ({route}:DetailsPropsType) => {
                     console.log('Image Url: ', imageUrl);
                     uploadObj.visuals = [{type:'image', source:{uri:imageUrl}}]
                 }
-                const result = await firestore()
+                const result = await firestore
                     .collection('posts')
                     .doc(item.id)
                     .update(uploadObj);
@@ -86,7 +86,7 @@ const EditPost = ({route}:DetailsPropsType) => {
             } else {
                 const imageUrl = await uploadImage();
                 console.log('Image Url: ', imageUrl);
-                const result = await firestore()
+                const result = await firestore
                     .collection('posts')
                     .add({
                         title:postTitle,
@@ -120,7 +120,7 @@ const EditPost = ({route}:DetailsPropsType) => {
     
         setUploading(true);
         
-        const storageRef = storage().ref(`photos/business_poster/${filename}`);
+        const storageRef = storage.ref(`photos/business_poster/${filename}`);
         const task = storageRef.putFile(uploadUri);
     
         // Set transferred state
