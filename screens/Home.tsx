@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, FlatList, Image, Pressable, Text, View, StyleSheet } from "react-native";
-import { CardType, HomeStackParamsList } from "../global/types";
+import { CardType, Dictionnary, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
 import { firestore } from "../App";
@@ -17,7 +17,8 @@ const height = wHeight - 64;
 type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation}: HomePropsType) => {
     const [posts, setPosts] = useState<never[]|CardType[]>([]);
-    
+    const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
+
     const y = useRef(new Animated.Value(0)).current;
     
     const [totalCardHeights, setTotalCardHeights] = useState<number[]>([]); //Array containing the heights of all the rendered cards
@@ -30,37 +31,45 @@ const Home = ({navigation}: HomePropsType) => {
         return sum;
     };
 
-    const fetchPosts = async () => {
+    const fetchPosts = async (number:number, fromDate?:Date|null) => {
         let fetchedPosts:CardType[] = [];
-        const result = await firestore
-            .collection('posts')
-            .orderBy('createdAt', 'desc')
-            .get();
+        let query = firestore.collection('posts').orderBy('createdAt', 'desc');
+            
+        if(fromDate) query = query.startAfter(fromDate); //apply fromDate filter if specified
+            
+        const result = await query.limit(number).get();
 
-        result.forEach(document => {
-            let refactoredDoc = document.data();
-            refactoredDoc.id = document.id;
-            fetchedPosts.push(refactoredDoc as CardType);
-        });
+        if(result.empty) {
+            console.log('List empty')
+            return;   
+        };
+        for (const document of result.docs) {
+            let docData = document.data();
 
-        console.log(fetchedPosts);
-        setPosts(fetchedPosts)
-    }
+            await Image.getSize(docData.visuals[0].source.uri, (width: number, height: number) => {
+                let refactoredDoc:CardType = {
+                    id:document.id,
+                    visuals:docData.visuals,
+                    title:docData.title,
+                    rating:docData.rating,
+                    description:docData.description,
+                    socialLinks: docData.socialLinks
+                };
+                
+                refactoredDoc.visuals[0].dimensions = {width, height};
+
+                fetchedPosts.push(refactoredDoc);
+            })
+        };
+
+        setPosts(fetchedPosts);
+        setStartAfterDate(result.docs[result.docs.length-1].data().createdAt);
+    };
 
     useEffect(() => {
-        fetchPosts()
+        fetchPosts(3).then(() => fetchPosts(5, startAfterDate));
     }, []);
-    // useEffect(() => {
-    //     if(item.visuals[0].source.uri){
-    //         Image.getSize(item.visuals[0].source.uri, (width: number, height: number) => {
-    //             setImageDims({width, height});
-    //         })
-    //     } else {
-    //         const imageDims = Image.resolveAssetSource(item.visuals[0].source||require('../assets/no_image.jpg'));
-    //         setImageDims({width:imageDims.width, height:imageDims.height})
-    //     }
-    // }, []);
-
+    
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
         useNativeDriver: true,
     });
@@ -87,12 +96,14 @@ const Home = ({navigation}: HomePropsType) => {
             <AnimatedFlatList
                 scrollEventThrottle={16}
                 bounces={false}
-                data={cards}
+                data={posts}
                 renderItem={RenderItem}
                 ListFooterComponent={<View style={{width:'100%', paddingBottom:height/6}}/>}
                 keyExtractor={(item:any) => item.id}
                 {...{ onScroll }}
                 extraData={y}
+                onEndReachedThreshold={0.2}
+                onEndReached={() => fetchPosts(4, startAfterDate)}
             />
       </View>
   );

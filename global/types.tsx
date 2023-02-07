@@ -1,5 +1,9 @@
 import { ImageSourcePropType, ImageURISource } from "react-native/types"
 
+export type Dictionnary = {
+    [key:string]:any
+};
+
 export type CardType = {
     id:string
     visuals:VisualItem[]
