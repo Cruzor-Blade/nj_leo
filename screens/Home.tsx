@@ -16,7 +16,7 @@ const height = wHeight - 64;
 
 type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation}: HomePropsType) => {
-    const [posts, setPosts] = useState<never[]|CardType[]>([]);
+    const [posts, setPosts] = useState<CardType[]>([]);
     const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
 
     const y = useRef(new Animated.Value(0)).current;
@@ -62,7 +62,7 @@ const Home = ({navigation}: HomePropsType) => {
             })
         };
 
-        setPosts(fetchedPosts);
+        setPosts(posts.concat(fetchedPosts));
         setStartAfterDate(result.docs[result.docs.length-1].data().createdAt);
     };
 

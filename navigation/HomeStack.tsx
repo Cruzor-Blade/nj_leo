@@ -99,7 +99,7 @@ const HomeStack = () => {
                             <View style={{alignItems:'center'}}>
                                 <Text style={{color:'#777', fontSize:16, marginRight:6}}>Suivez moi:</Text>
                                 <View style={{flexDirection:'row'}}>
-                                    <Pressable onPress={() => Linking.openURL('http://youtube.com@NJLEO')}>
+                                    <Pressable onPress={() => Linking.openURL('http://youtube.com/@NJLEO')}>
                                         <Image style={styles.socialIcon} source={require('../assets/youtube.png')}/>
                                     </Pressable>
                                     <Pressable onPress={() => Linking.openURL('http://t.me/+cLNU6Jvk7P9iN2U8')}>

@@ -81,7 +81,7 @@ const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, 
 
   return (
     <Animated.View
-        style={[styles.card, { opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
+        style={[styles.card, { opacity:visibleCardHeight==0?0:opacity, marginVertical:cardMargin, transform: [{ translateY }, { scale }] }]}
         key={index}
     >   
         <Card
