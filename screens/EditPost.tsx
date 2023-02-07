@@ -139,13 +139,7 @@ const EditPost = ({route}:DetailsPropsType) => {
         }    
     };
     
-    type TitleModalPropsType = {
-        title:string
-        setTitle:React.Dispatch<React.SetStateAction<string>>
-        visible:boolean
-        onClosePress:() => void
-    };
-
+    
     useEffect(() => {
 
         if(item && item.visuals[0].source.uri){
@@ -158,11 +152,19 @@ const EditPost = ({route}:DetailsPropsType) => {
         }
     }, []);
 
+    
+    type TitleModalPropsType = {
+        title:string
+        setTitle:React.Dispatch<React.SetStateAction<string>>
+        visible:boolean
+        onClosePress:() => void
+    };
+
     const TitleModal = ({title, setTitle, visible, onClosePress}:TitleModalPropsType) => {
         const [newTitle, setNewTitle] = useState(title);
         
         const onDonePress = () => {
-            setPostTitle(newTitle);
+            setTitle(newTitle);
             onClosePress();
         };
 
