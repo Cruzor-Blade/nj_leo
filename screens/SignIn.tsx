@@ -5,9 +5,10 @@ import { AuthContext } from '../contexts/AuthContext';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeStackParamsList } from '../global/types';
 
+
 type SignUpPropsType = StackScreenProps<HomeStackParamsList, 'SignUp'>;
 
-const SignUp = ({navigation}:SignUpPropsType) => {
+const SignIn = ({navigation}:SignUpPropsType) => {
     const emailRegExp = new RegExp('^[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]{2,3}$');
     
     const setUser = useContext(AuthContext)?.setUser; 
@@ -36,7 +37,7 @@ const SignUp = ({navigation}:SignUpPropsType) => {
     return (
         <View style={{backgroundColor:'#fff', flex:1}}>
             <Text style={{marginVertical:15, marginHorizontal:20, fontSize:15, color:'#000'}}>
-                Vous pouvez créer un compte en remplissant les informations ci dessous
+                Vous pouvez vous connecter à votre compte en remplissant les informations ci dessous
             </Text>
             {emailValid? null: <Text style={styles.error}>Addresse email non valide</Text>}
             <TextInput
@@ -55,13 +56,13 @@ const SignUp = ({navigation}:SignUpPropsType) => {
             <Pressable
                 android_ripple={{foreground:true, color:'#fff'}}
                 onPress={onConnect} style={styles.connectBtn}>
-                <Text style={{fontSize:16, fontWeight:'600', color:'#fff'}}>Créer un compte</Text>
+                <Text style={{fontSize:16, fontWeight:'600', color:'#fff'}}>Se connecter</Text>
             </Pressable>
-            <Text style={{marginTop:15, textAlign:'center'}}>Vous avez déjà un compte?</Text>
+            <Text style={{marginTop:15, textAlign:'center'}}>Vous n'avez pas encore un compte?</Text>
             <Pressable
                 android_ripple={{foreground:true, color:'#ccc'}}
-                onPress={() => navigation.navigate('SignIn')} style={{...styles.connectBtn, marginTop:15, backgroundColor:'#fff', borderWidth:3, borderColor:'#000080'}}>
-                <Text style={{fontSize:16, fontWeight:'600', color:'#000080'}}>Se connecter</Text>
+                onPress={() => navigation.navigate('SignUp')} style={{...styles.connectBtn, marginTop:15, backgroundColor:'#fff', borderWidth:3, borderColor:'#000080'}}>
+                <Text style={{fontSize:16, fontWeight:'600', color:'#000080'}}>Créer un compte</Text>
             </Pressable>
         </View>
     )
@@ -100,4 +101,4 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
 })
-export default SignUp;
+export default SignIn;

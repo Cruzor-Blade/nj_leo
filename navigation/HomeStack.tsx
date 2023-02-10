@@ -8,6 +8,7 @@ import { firestore } from "../App";
 import { storage } from "../App";
 import { useState } from "react";
 import SignUp from "../screens/SignUp";
+import SignIn from "../screens/SignIn";
 
 const Stack = createStackNavigator<HomeStackParamsList>();
 
@@ -154,9 +155,9 @@ const HomeStack = () => {
                 component={SignUp}
                 options={{headerTitle:'Créer Un Compte'}}
             />
-                        <Stack.Screen
+            <Stack.Screen
                 name='SignIn'
-                component={SignUp}
+                component={SignIn}
                 options={{headerTitle:'Se Connecter'}}
             />
         </Stack.Navigator>
