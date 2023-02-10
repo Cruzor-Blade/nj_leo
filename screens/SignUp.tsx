@@ -17,20 +17,29 @@ const SignUp = ({navigation}:SignUpPropsType) => {
     
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
-    
+    const [error, setError] = useState('');
+
     const endEditObject = {
         email:() => {setEmailValid(emailRegExp.test(email)); return emailRegExp.test(email)},
         password:() => {setPasswordValid(password.length>=8); return password.length>=8},
     };
 
     const onConnect = async () => {
+        if(error) setError('');
+
         const condition = setUser
         && endEditObject.email()
         && endEditObject.password();
         
         if(condition) {
-            await auth.signInWithEmailAndPassword(email, password);
-            // setUser(response.data);
+            try {
+                await auth.createUserWithEmailAndPassword(email, password);
+                // setUser(response.data);
+                navigation.replace('Home', {shouldRefresh:false});
+            } catch (error) {
+                console.log('An error occured: ', error);
+                setError('An error occured');
+            }
         }
     }
     return (
@@ -52,6 +61,9 @@ const SignUp = ({navigation}:SignUpPropsType) => {
                 onChangeText={(text) => setPassword(text)}
                 placeholderTextColor='#888'
             />
+            {
+                error?<Text>{error}</Text>:null
+            }
             <Pressable
                 android_ripple={{foreground:true, color:'#fff'}}
                 onPress={onConnect} style={styles.connectBtn}>
@@ -81,7 +93,7 @@ const styles = StyleSheet.create({
         borderColor:'#777',
         alignItems:'center',
         justifyContent:'center',
-        color:'red',
+        color:'black',
         alignSelf:'center',
         borderRadius:5,
         marginVertical:5,

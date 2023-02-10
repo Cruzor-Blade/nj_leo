@@ -95,22 +95,19 @@ const Home = ({navigation, route}: HomePropsType) => {
             navigation.setParams({shouldRefresh:false})
         }
     });
-
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            if(setUser) setUser({email:'hdsajb@gmail.com', id:'yuhdshouihsda'});
-        } else {
-          // Signed out
-        }
-      });
       
 
     useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                if(setUser) setUser({email:'hdsajb@gmail.com', id:'yuhdshouihsda'});
+            } else {
+              // Signed out
+            }
+        });
         if(user){
-        unsubscribe();
-    }
-    }, [user]);
-    useEffect(() => {
+            unsubscribe();
+        }
         fetchPosts(3).then(() => fetchPosts(5, startAfterDate));
     }, []);
     
