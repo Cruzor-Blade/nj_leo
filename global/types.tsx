@@ -51,6 +51,8 @@ export type UserType = {
 export type SetUserType = React.Dispatch<React.SetStateAction<UserType | null>>;
 
 export type AuthContextType = {
+    isAdmin:boolean
+    setAdminsArr:React.Dispatch<React.SetStateAction<string[]>>
     user:UserType | null
     setUser:SetUserType
 };

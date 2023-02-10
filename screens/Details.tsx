@@ -1,13 +1,16 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Image, Linking, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { HomeStackParamsList } from '../global/types';
 import { ratingColors } from './EditPost';
+import { AuthContext } from '../contexts/AuthContext';
 
 type DetailsPropsType = StackScreenProps<HomeStackParamsList, 'Details'>;
 
 const Details = ({navigation, route}:DetailsPropsType) => {
+    const authContext = useContext(AuthContext);
+    const isAdmin = authContext?.isAdmin;
     const {item} = route.params;
     const {width} = useWindowDimensions();
     const fontSize = 16;
@@ -38,16 +41,21 @@ const Details = ({navigation, route}:DetailsPropsType) => {
     }, []);
     return (
         <View style={{flex:1, backgroundColor:'white'}}>
-            <Pressable
-                style={styles.floatingButtonContainer}
-                android_ripple={{color:'#fff', foreground:true}}
-                onPress={onEditPress}
-            >
-                <Image
-                    source={require('../assets/edit.png')}
-                    style={{height:40, width:40, resizeMode:'contain', tintColor:'#fff'}}
-                />
-            </Pressable>
+            {
+                isAdmin?
+                    <Pressable
+                        style={styles.floatingButtonContainer}
+                        android_ripple={{color:'#fff', foreground:true}}
+                        onPress={onEditPress}
+                    >
+                        <Image
+                            source={require('../assets/edit.png')}
+                            style={{height:40, width:40, resizeMode:'contain', tintColor:'#fff'}}
+                        />
+                    </Pressable>
+                :
+                    null
+            }
             <ScrollView contentContainerStyle={{alignItems:'center', backgroundColor:'#fff'}}>
                 <Image
                     source={item.visuals[0].source?item.visuals[0].source:require('../assets/no_image.jpg')}

@@ -20,6 +20,8 @@ const Home = ({navigation, route}: HomePropsType) => {
     const authContext = useContext(AuthContext);
     const user = authContext?.user;
     const setUser = authContext?.setUser;
+    const isAdmin = authContext?.isAdmin;
+    const setAdminsArr = authContext?.setAdminsArr;
 
     const [posts, setPosts] = useState<CardType[]>([]);
     const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
@@ -35,6 +37,15 @@ const Home = ({navigation, route}: HomePropsType) => {
             sum += numArr[index];
         };
         return sum;
+    };
+
+    const getAdmins = async () => {
+        let adminsEmails = [];
+        const adminsSnapshot = await firestore.collection('admins').get();
+        for (const doc of adminsSnapshot.docs) {
+            adminsEmails.push(doc.data().email);
+        }
+        if(setAdminsArr) setAdminsArr(adminsEmails);
     };
 
     const fetchPosts = async (number:number, fromDate?:Date|null, reset?:boolean) => {
@@ -82,12 +93,15 @@ const Home = ({navigation, route}: HomePropsType) => {
     };
 
     const onFloatingButtonPress = () => {
-        if(user) {
+        if(isAdmin) {
             navigation.navigate('EditPost', {item:null})
-        } else {
+        } else if(!user) {
             navigation.navigate('SignIn');
+        } else {
+
         }
     };
+
 
     useFocusEffect(() => {
         if(route.params?.shouldRefresh) { //if shouldRefresh is enabled, refetch posts and disable shouldRefresh
@@ -98,17 +112,12 @@ const Home = ({navigation, route}: HomePropsType) => {
       
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                if(setUser) setUser({email:'hdsajb@gmail.com', id:'yuhdshouihsda'});
-            } else {
-              // Signed out
-            }
-        });
-        if(user){
-            unsubscribe();
-        }
+        const subscriber = auth.onAuthStateChanged(authUser => {
+            if(authUser && setUser) setUser({email:authUser.email||'', id:authUser.uid});
+        })
+        getAdmins();
         fetchPosts(3).then(() => fetchPosts(5, startAfterDate));
+        return subscriber;
     }, []);
     
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
@@ -125,20 +134,27 @@ const Home = ({navigation, route}: HomePropsType) => {
         )
     };
 
-  return (
-      <View style={{flex:1}}>
-            <Pressable
-                style={styles.floatingButtonContainer}
-                android_ripple={{color:'#fff', foreground:true}}
-                onPress={onFloatingButtonPress}
-            >
-                {
-                    user?
-                        <Text style={{color:'#fff', fontSize:30}}>+</Text>
-                        :
-                        <Image source={require('../assets/user.png')} style={{height:30, width:30, tintColor:'#fff'}} />
-                }
-            </Pressable>
+    return (
+        <View style={{flex:1}}>
+            {
+                (isAdmin) || !user ?
+                <Pressable
+                    style={styles.floatingButtonContainer}
+                    android_ripple={{color:'#fff', foreground:true}}
+                    onPress={onFloatingButtonPress}
+                >
+                    { () => {
+                            if(isAdmin) {
+                                return <Text style={{color:'#fff', fontSize:30}}>+</Text>;
+                            } else if(!user) {
+                                return <Image source={require('../assets/user.png')} style={{height:30, width:30, tintColor:'#fff'}} />;
+                            }
+                        }
+                    }
+                </Pressable>
+                :
+                null
+            }
             <AnimatedFlatList
                 scrollEventThrottle={16}
                 bounces={false}
