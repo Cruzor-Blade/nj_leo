@@ -7,6 +7,7 @@ import { Image, Linking, Modal, Pressable, StyleSheet, Text, ToastAndroid, View,
 import { firestore } from "../App";
 import { storage } from "../App";
 import { useState } from "react";
+import SignUp from "../screens/SignUp";
 
 const Stack = createStackNavigator<HomeStackParamsList>();
 
@@ -147,6 +148,16 @@ const HomeStack = () => {
                             ):undefined
                     }
                 }}
+            />
+            <Stack.Screen
+                name='SignUp'
+                component={SignUp}
+                options={{headerTitle:'Créer Un Compte'}}
+            />
+                        <Stack.Screen
+                name='SignIn'
+                component={SignUp}
+                options={{headerTitle:'Se Connecter'}}
             />
         </Stack.Navigator>
     )

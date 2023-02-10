@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, FlatList, Image, Pressable, Text, View, StyleSheet } from "react-native";
 import { CardType, Dictionnary, HomeStackParamsList } from "../global/types";
 import AnimatedPostCard from "../components/AnimatedPostCard";
 import { StackScreenProps } from "@react-navigation/stack";
-import { firestore } from "../App";
-import { cards } from "../assets/dummyCards";
+import { auth, firestore } from "../App";
 import { useFocusEffect } from "@react-navigation/native";
+import { AuthContext } from "../contexts/AuthContext";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -17,6 +17,10 @@ const height = wHeight - 64;
 
 type HomePropsType = StackScreenProps<HomeStackParamsList, 'Home'>;
 const Home = ({navigation, route}: HomePropsType) => {
+    const authContext = useContext(AuthContext);
+    const user = authContext?.user;
+    const setUser = authContext?.setUser;
+
     const [posts, setPosts] = useState<CardType[]>([]);
     const [startAfterDate, setStartAfterDate] = useState<Date|null>(null);
     const [loading, setLoading] = useState(false);
@@ -77,6 +81,14 @@ const Home = ({navigation, route}: HomePropsType) => {
         setLoading(false);
     };
 
+    const onFloatingButtonPress = () => {
+        if(user) {
+            navigation.navigate('EditPost', {item:null})
+        } else {
+            navigation.navigate('SignIn');
+        }
+    };
+
     useFocusEffect(() => {
         if(route.params?.shouldRefresh) { //if shouldRefresh is enabled, refetch posts and disable shouldRefresh
             fetchPosts(3, undefined, true);
@@ -84,6 +96,20 @@ const Home = ({navigation, route}: HomePropsType) => {
         }
     });
 
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            if(setUser) setUser({email:'hdsajb@gmail.com', id:'yuhdshouihsda'});
+        } else {
+          // Signed out
+        }
+      });
+      
+
+    useEffect(() => {
+        if(user){
+        unsubscribe();
+    }
+    }, [user]);
     useEffect(() => {
         fetchPosts(3).then(() => fetchPosts(5, startAfterDate));
     }, []);
@@ -107,9 +133,14 @@ const Home = ({navigation, route}: HomePropsType) => {
             <Pressable
                 style={styles.floatingButtonContainer}
                 android_ripple={{color:'#fff', foreground:true}}
-                onPress={() => navigation.navigate('EditPost', {item:null})}
+                onPress={onFloatingButtonPress}
             >
-                <Text style={{color:'#fff', fontSize:30}}>+</Text>
+                {
+                    user?
+                        <Text style={{color:'#fff', fontSize:30}}>+</Text>
+                        :
+                        <Image source={require('../assets/user.png')} style={{height:30, width:30, tintColor:'#fff'}} />
+                }
             </Pressable>
             <AnimatedFlatList
                 scrollEventThrottle={16}

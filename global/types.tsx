@@ -39,4 +39,18 @@ export type HomeStackParamsList = {
     EditPost:{
         item:CardType | null
     }
+    SignIn:undefined
+    SignUp:undefined
+};
+
+export type UserType = {
+    email:string
+    id:string
+};
+
+export type SetUserType = React.Dispatch<React.SetStateAction<UserType | null>>;
+
+export type AuthContextType = {
+    user:UserType | null
+    setUser:SetUserType
 };
