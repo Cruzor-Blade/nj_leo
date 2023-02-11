@@ -29,21 +29,6 @@ const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, 
     const isBottom = height - totalCardHeight;
     const isAppearing = height;
 
-    const stranslateY = Animated.add(
-        Animated.add(
-            y, //This y value serves as an equilibrium value, to translate the items in opposite direction of the scrolling
-            y.interpolate({ //This value ensure that the items keep moving as if they were normally scrolled
-                inputRange: [0, 0.00001 + prevCardsHeight],
-                outputRange: [0, -prevCardsHeight],
-                extrapolateRight: "clamp",
-            })
-        ),
-        position.interpolate({
-            inputRange: [isBottom, isAppearing],
-            outputRange: [0, -totalCardHeight / 4],
-            extrapolate: "clamp",
-        })
-    );
     const translateY = Animated.add(
         Animated.add(
             y, //This y value serves as an equilibrium value, to translate the items in opposite direction of the scrolling
@@ -54,20 +39,20 @@ const AnimatedPostCard = ({ item, y, index, height, cardWidth, prevCardsHeight, 
             })
         ),
         position.interpolate({ //This value ensures that the space between the cards doesn't increase as the card scale goes down
-            inputRange: [isBottom, isAppearing],
-            outputRange: [0, -totalCardHeight / 4],
+            inputRange: isBottom<isAppearing? [isBottom, isAppearing]:[isAppearing, isBottom],
+            outputRange: isBottom<isAppearing? [0, -totalCardHeight / 4]:[-totalCardHeight / 4, 0],
             extrapolate: "clamp",
         })
     );
     
     const scale = position.interpolate({
-        inputRange: [isDisappearing, isTop, isBottom, isAppearing],
+        inputRange: isTop<isBottom? [isDisappearing, isTop, isBottom, isAppearing]:[isDisappearing, isBottom, isTop, isAppearing],
         outputRange: [0.5, 1, 1, 0.5],
         extrapolate: "clamp",
     });
 
     const opacity = position.interpolate({
-        inputRange: [isDisappearing, isTop, isBottom, isAppearing],
+        inputRange: isTop<isBottom? [isDisappearing, isTop, isBottom, isAppearing]:[isDisappearing, isBottom, isTop, isAppearing],
         outputRange: [0.5, 1, 1, 0.5],
     });
 
