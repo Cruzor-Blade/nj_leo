@@ -1,5 +1,5 @@
 import {useContext, useState} from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native';
 import { auth } from '../App';
 import { AuthContext } from '../contexts/AuthContext';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -35,6 +35,7 @@ const SignIn = ({navigation}:SignUpPropsType) => {
             try {
                 await auth.signInWithEmailAndPassword(email, password);
                 // setUser(response.data);
+                ToastAndroid.show('Connecté à votre compte', 1500);
                 navigation.replace('Home', {shouldRefresh:false});
             } catch (error) {
                 console.log('An error occured: ', error);
